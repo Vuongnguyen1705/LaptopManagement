@@ -17,6 +17,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+    
+
+        <TabControl TabStripPlacement="left" Margin="0, 0, 0, 10">
+            <TabItem Name="fontweight" Header="FontWeight">
+                <TabItem.Content>
+                    <TextBlock TextWrapping="WrapWithOverflow">
+        FontWeight property information goes here.
+                    </TextBlock>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem Name="fontsize" Header="FontSize">
+                <TabItem.Content>
+                    <TextBlock TextWrapping="WrapWithOverflow">
+        FontSize property information goes here.
+                    </TextBlock>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
