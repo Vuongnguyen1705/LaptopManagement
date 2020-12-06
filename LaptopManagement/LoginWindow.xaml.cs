@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace LaptopManagement
 {
@@ -32,22 +33,21 @@ namespace LaptopManagement
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            int role = -1;
+            string userName = username.Text;
+            string pass = password.Password;
             new Thread(() =>
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
                     TextBlockError.Visibility = Visibility.Collapsed;
-                    role = bLL_Login.TryLogin(username.Text, password.Password);
-                }), System.Windows.Threading.DispatcherPriority.Loaded);
+                }), DispatcherPriority.Loaded);
             }).Start();
             new Thread(() =>
             {
+                int role = bLL_Login.TryLogin(userName, pass);
                 Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    Thread.Sleep(2000);
-                    //tryLogin là hàm đọc db nếu đọc được trả về Role, sai thì báo lỗi;            
+                {                               
                     if (role == 1)
                     {
                         UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username.Text);
@@ -63,12 +63,11 @@ namespace LaptopManagement
                     else
                     {
                         TextBlockError.Visibility = Visibility.Visible;
-                        TextBlockError.Text = "Sai thông tin đăng nhập";
+                        TextBlockError.Text = "Sai thông tin đăng nhập!";
                     }
                     ImageAwesomeLoading.Visibility = Visibility.Collapsed;
-                }), System.Windows.Threading.DispatcherPriority.Background);
+                }), DispatcherPriority.Background);
             }).Start();
-
         }
 
     }
