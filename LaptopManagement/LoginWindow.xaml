@@ -62,7 +62,7 @@
                         BorderBrush="#13A2F0"                        
                         Margin="15 0 15 0"
                         VerticalAlignment="Center"
-                        x:Name="username"
+                        x:Name="TextBoxUserName"
                         Text="NV_001"
                         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                         materialDesign:HintAssist.Hint="Tên đăng nhập" />
@@ -70,7 +70,7 @@
                         BorderBrush="#13A2F0"
                         Margin="15 0 15 0"  
                         VerticalAlignment="Center"
-                        x:Name="password"
+                        x:Name="PasswordBoxPassword"
                         Password="123456"
                         Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
                         materialDesign:HintAssist.Hint="Mật khẩu" />
