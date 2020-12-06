@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LaptopManagement"
+        xmlns:uc="clr-namespace:LaptopManagement.userControl"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -16,32 +18,40 @@
         
         mc:Ignorable="d"
         Title="LoginWindow" Height="600" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition Width="0.6*"/>
         </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.ColumnSpan="2">
+            <uc:ControlBar/>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1">
             <Grid.Background>
                 <ImageBrush ImageSource="images\bg.jpg"  Stretch="UniformToFill"/>
             </Grid.Background>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Grid.Row="1">
             <Grid.Background>
                 <ImageBrush ImageSource="images\a.jpeg" Stretch="UniformToFill"/>
             </Grid.Background>
 
             <materialDesign:Card Width="250"
-                Height="250"
+                Height="300"
                 Padding="10">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
+                        <RowDefinition Height="2.5*" />
+                        <RowDefinition Height="2.5*" />
+                        <RowDefinition Height="2.5*" />
+                        <RowDefinition Height="2.5*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Đăng nhập hệ thống"
                         FontSize="18"
@@ -64,13 +74,18 @@
                         Password="123456"
                         Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
                         materialDesign:HintAssist.Hint="Mật khẩu" />
+
+                    <StackPanel Grid.Row="4">
+                        <fa:ImageAwesome x:Name="ImageAwesomeLoading" Visibility="Collapsed" Icon="Spinner" Margin="5" Spin="True" Height="18" Width="18" />
+                        <TextBlock x:Name="TextBlockError" Visibility="Hidden" Text="jkasjdf" Margin="5" Foreground="Red" HorizontalAlignment="Center"/>
+                        <Button 
+                            Background="#13A2F0"
+                            BorderThickness="0"
+                            Width="200" 
+                            Content="Đăng nhập"
+                            Click="Button_Click_Login"/>
+                    </StackPanel>
                     
-                    <Button Grid.Row="3"
-                        Background="#13A2F0"
-                        BorderThickness="0"
-                        Width="200" 
-                        Content="Đăng nhập"
-                        Click="Button_Click_Login"/>
                 </Grid>
             </materialDesign:Card>
         </Grid>

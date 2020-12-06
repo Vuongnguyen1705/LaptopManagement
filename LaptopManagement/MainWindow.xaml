@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LaptopManagement"
+        xmlns:uc="clr-namespace:LaptopManagement.userControl"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -15,26 +17,99 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1024"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None">
     <Grid>
-    
-
-        <TabControl TabStripPlacement="left" Margin="0, 0, 0, 10">
-            <TabItem Name="fontweight" Header="FontWeight">
-                <TabItem.Content>
-                    <TextBlock TextWrapping="WrapWithOverflow">
-        FontWeight property information goes here.
-                    </TextBlock>
-                </TabItem.Content>
-            </TabItem>
-
-            <TabItem Name="fontsize" Header="FontSize">
-                <TabItem.Content>
-                    <TextBlock TextWrapping="WrapWithOverflow">
-        FontSize property information goes here.
-                    </TextBlock>
-                </TabItem.Content>
-            </TabItem>
-        </TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <uc:ControlBar/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="LightGray" Offset="1"/>
+                        <GradientStop Color="#FFE6E6E6"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Background="#C595EA">
+                    <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <TextBlock Text="Xin chào,"
+                               Style="{DynamicResource TextblockStyle}"/>
+                        <TextBlock Name="TextBlockUserName" 
+                            Cursor="Hand"
+                            Text="Nguyễn Hùng Vương"
+                            MouseDown="TextBlockUserName_MouseDown"
+                            Style="{DynamicResource TextblockStyle}"/>
+                        <Button x:Name="ButtonLogout" BorderThickness="0" Background="{Binding null}" Click="Button_Logout_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="Black" 
+                                Text="Đăng xuất"
+                                Style="{DynamicResource TextblockStyle}"/>
+                                <fa:ImageAwesome Icon="SignOut"  Height="24" Width="24" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                
+                <StackPanel Grid.Row="1">
+                    <Button x:Name="ButtonProduct"
+                        Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
+                        <Grid Width="200">
+                            <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Center" Text="Quản lý sản phẩm"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="ButtonUser"
+                        Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
+                        <Grid Width="200">
+                            <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
+                            <TextBlock Text="Quản lý người dùng" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="ButtonCombo"
+                        Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
+                        <Grid Width="200">
+                            <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
+                            <TextBlock Text="Quản lý combo" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="ButtonSell"
+                        Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
+                        <Grid Width="200">
+                            <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Center" Text="Quản lý bán hàng"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="ButtonStatistic"
+                        Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
+                        <Grid Width="200">
+                            <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Center" Text="Thống kê"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Frame x:Name="LayoutContent" Grid.Column="1" NavigationUIVisibility="Hidden">
+                
+            </Frame>
+        </Grid>
+        <!--<Grid Grid.Row="1">
+            <fa:ImageAwesome Icon="Spinner" Spin="True" Height="48" Width="48" />
+        </Grid>-->
     </Grid>
 </Window>
