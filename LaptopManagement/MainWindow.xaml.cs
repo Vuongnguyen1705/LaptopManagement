@@ -68,7 +68,7 @@ namespace LaptopManagement
 
         private void TextBlockUserName_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            LayoutContent.Content = new InfoUserPage();
+            LayoutContent.Content = new ProfilePage();
         }
     }
 }

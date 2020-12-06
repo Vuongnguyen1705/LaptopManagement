@@ -18,9 +18,9 @@ namespace LaptopManagement.pages
     /// <summary>
     /// Interaction logic for InfoUserPage.xaml
     /// </summary>
-    public partial class InfoUserPage : Page
+    public partial class ProfilePage : Page
     {
-        public InfoUserPage()
+        public ProfilePage()
         {
             InitializeComponent();
         }

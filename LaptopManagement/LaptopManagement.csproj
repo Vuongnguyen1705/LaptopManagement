@@ -80,8 +80,8 @@
     <Compile Include="pages\ComboPage.xaml.cs">
       <DependentUpon>ComboPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\InfoUserPage.xaml.cs">
-      <DependentUpon>InfoUserPage.xaml</DependentUpon>
+    <Compile Include="pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\ProductPage.xaml.cs">
       <DependentUpon>ProductPage.xaml</DependentUpon>
@@ -121,7 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\InfoUserPage.xaml">
+    <Page Include="pages\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

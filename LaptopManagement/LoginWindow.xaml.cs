@@ -33,8 +33,8 @@ namespace LaptopManagement
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            string userName = username.Text;
-            string pass = password.Password;
+            string username = TextBoxUserName.Text;
+            string password = PasswordBoxPassword.Password;
             new Thread(() =>
             {
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -45,18 +45,18 @@ namespace LaptopManagement
             }).Start();
             new Thread(() =>
             {
-                int role = bLL_Login.TryLogin(userName, pass);
+                int role = bLL_Login.TryLogin(username, password);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {                               
                     if (role == 1)
                     {
-                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username.Text);
+                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username);
                         new MainWindow().Show();
                         Close();
                     }
-                    else if (bLL_Login.TryLogin(username.Text, password.Password) == 2)
+                    else if (bLL_Login.TryLogin(username, password) == 2)
                     {
-                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username.Text);
+                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username);
                         new MainWindow().Show();
                         Close();
                     }
