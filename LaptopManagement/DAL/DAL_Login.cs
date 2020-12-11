@@ -17,17 +17,25 @@ namespace DAL
 
         public int TryLogin(string username, string password)
         {
-            var query = db.Employees.Where(x => x.username == username && x.password == password).SingleOrDefault();
+            var query = db.Users.Where(x => x.username == username && x.password == password).SingleOrDefault();
             if (query != null)
             {
-                if (query.Role_ID == 1)
+                if (query.isDisable == false)
                 {
-                    return 1;
+                    if (query.Role_ID == 1)
+                    {
+                        return 1;
+                    }
+                    else if (query.Role_ID == 2)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        return 3;
+                    }
                 }
-                else
-                {
-                    return 2;
-                }
+                return -1;
             }
             return 0;
 

@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL_Employee.cs" />
+    <Compile Include="BLL_Role.cs" />
+    <Compile Include="BLL_User.cs" />
     <Compile Include="BLL_Login.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserSingleTon.cs" />
   </ItemGroup>

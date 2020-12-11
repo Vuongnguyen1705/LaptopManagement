@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LaptopManagement.pages"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -15,10 +16,88 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1000"
       Title="UserPage">
 
-    <Grid Background="Pink">
-        
+    <Grid
+         Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                <TextBox x:Name="TextBoxSearch"                         
+                    Width="300" 
+                    Height="30"
+                    Margin="5"
+                    materialDesign:HintAssist.Hint="🔍 Tìm Kiếm theo tên đăng nhập"
+                    TextChanged="TextBoxSearch_TextChanged"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonAdd" Content="Thêm người dùng" HorizontalAlignment="Right" Margin="5" Click="ButtonAdd_Click"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="DataGridUser"
+                MouseLeftButtonDown="DataGridUser_MouseLeftButtonDown"
+                Margin="0 8 0 0"
+                ItemsSource="{Binding Items3}"
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Khoá tài khoản">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    IsChecked="{Binding isDisable}"
+                                    Checked="ToggleButton_Checked_Active"
+                                    Unchecked="ToggleButton_Unchecked_DeActive"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Binding="{Binding username}"
+                        Header="Tên đăng nhập"
+                        EditingElementStyle="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" />
+                    <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding password}"
+                        Header="Mật khẩu"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <!-- set a max length to get an indicator in the editor -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding fullName}"
+                        Header="Họ và tên"
+                        MaxLength="255"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding gender}"
+                        Header="Giới tính"/>
+                    <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding birthDate}"
+                        Header="Ngày sinh"/>
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding address}"
+                        Header="Địa chỉ"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding joinDate}"
+                        Header="Ngày vào làm"/>
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding role}"
+                        Header="Vai trò"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Page>

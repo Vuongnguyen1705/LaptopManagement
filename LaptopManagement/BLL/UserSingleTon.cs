@@ -8,13 +8,13 @@ namespace BLL
     public class UserSingleTon
     {
         private static readonly UserSingleTon instance = new UserSingleTon();
-        private Employee employee;
+        private User user;
         static UserSingleTon()
         {
         }
         private UserSingleTon()
         {
-            User = new Employee();
+            User = new User();
         }
         public static UserSingleTon Instance
         {
@@ -24,6 +24,6 @@ namespace BLL
             }
         }
 
-        public Employee User { get; set; }
+        public User User { get; set; }
     }
 }
