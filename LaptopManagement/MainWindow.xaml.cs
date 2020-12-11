@@ -60,7 +60,7 @@ namespace LaptopManagement
         }
         private void LoadContent()
         {
-            string firstName = UserSingleTon.Instance.User.lastName;
+            string firstName = UserSingleTon.Instance.User.firstName;
             string lastName = UserSingleTon.Instance.User.lastName;
             string fullName = firstName + " " + lastName;
             TextBlockUserName.Text = fullName;

@@ -22,13 +22,15 @@ namespace LaptopManagement
     /// </summary>
     public partial class LoginWindow : Window
     {
-        BLL_Login bLL_Login = new BLL_Login();
-        BLL_Employee bLL_Employee = new BLL_Employee();
-        private bool isLoading = true;
+        private BLL_Login bLL_Login = new BLL_Login();
+        private BLL_User bLL_Employee = new BLL_User();
+        private ToastViewModel _vm;
+
         public LoginWindow()
         {
             InitializeComponent();
             Application.Current.MainWindow = this;
+            _vm = new ToastViewModel();
         }
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
@@ -47,24 +49,32 @@ namespace LaptopManagement
             {
                 int role = bLL_Login.TryLogin(username, password);
                 Dispatcher.BeginInvoke(new Action(() =>
-                {                               
-                    if (role == 1)
+                {
+                    switch (role)
                     {
-                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username);
-                        new MainWindow().Show();
-                        Close();
-                    }
-                    else if (bLL_Login.TryLogin(username, password) == 2)
-                    {
-                        UserSingleTon.Instance.User = bLL_Employee.getEmployeeByUsername(username);
-                        new MainWindow().Show();
-                        Close();
-                    }
-                    else
-                    {
-                        TextBlockError.Visibility = Visibility.Visible;
-                        TextBlockError.Text = "Sai thông tin đăng nhập!";
-                    }
+                        case -1:
+                            TextBlockError.Visibility = Visibility.Visible;
+                            _vm.ShowError("Tài khoản của bạn bị khóa! Vui lòng liên hệ admin");
+                            break;
+                        case 1:
+                            UserSingleTon.Instance.User = bLL_Employee.getUserByUsername(username);
+                            new MainWindow().Show();
+                            Close();
+                            break;
+                        case 2:
+                            UserSingleTon.Instance.User = bLL_Employee.getUserByUsername(username);
+                            new MainWindow().Show();
+                            Close();
+                            break;
+                        case 3:
+                            TextBlockError.Visibility = Visibility.Visible;
+                            TextBlockError.Text = "Bạn không đủ quyền đăng nhập ";
+                            break;
+                        default:
+                            TextBlockError.Visibility = Visibility.Visible;
+                            TextBlockError.Text = "Sai thông tin đăng nhập!";
+                            break;
+                    }                    
                     ImageAwesomeLoading.Visibility = Visibility.Collapsed;
                 }), DispatcherPriority.Background);
             }).Start();

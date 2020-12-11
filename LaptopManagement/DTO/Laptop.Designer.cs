@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\HK1-2020-2021\XayDungPMTheoMoHinhPhanLop\BaiTap\LaptopManagement\DTO\Laptop.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\HK1-2020-2021\XayDungPMTheoMoHinhPhanLop\BaiTap\LaptopManagement\LaptopManagement\DTO\Laptop.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

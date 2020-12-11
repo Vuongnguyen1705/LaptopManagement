@@ -12,17 +12,37 @@ namespace DTO
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class User
     {
+        public User()
+        {
+        }
+
+        public User(int iD, string username, string password, string firstName, string lastName, bool gender, DateTime birthDate, string address, DateTime joinDate, bool isDisable, int role_ID)
+        {
+            ID = iD;
+            this.username = username;
+            this.password = password;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.gender = gender;
+            this.birthDate = birthDate;
+            this.address = address;
+            this.joinDate = joinDate;
+            this.isDisable = isDisable;
+            Role_ID = role_ID;
+        }
+
         public int ID { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public bool gender { get; set; }
-        public System.DateTime birthDate { get; set; }
+        public DateTime birthDate { get; set; }
         public string address { get; set; }
-        public System.DateTime joinDate { get; set; }
+        public DateTime joinDate { get; set; }
+        public bool isDisable { get; set; }
         public int Role_ID { get; set; }
     }
 }
