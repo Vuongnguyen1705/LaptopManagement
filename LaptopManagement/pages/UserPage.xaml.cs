@@ -85,7 +85,6 @@ namespace LaptopManagement.pages
 
                 }), DispatcherPriority.Background);
             }).Start();
-            
         }
 
         private void Filter()
