@@ -11,18 +11,37 @@ namespace DTO
 {
     using System;
     using System.Collections.Generic;
+
     
     public partial class Product
     {
+        public Product()
+        {
+        }
+        public Product(int iD, string Product_Name, int Catalog_ID, int Amount, decimal Price, string Image, decimal Discount, decimal DiscountMoney, string Detail, int Brand_ID)
+        {
+            ID = iD;
+            this.Product_Name = Product_Name;
+            this.Catalog_ID = Catalog_ID;
+            this.Amount = Amount;
+            this.Price = Price;
+            this.Image = Image;
+            this.Discount = Discount;
+            this.DiscountMoney = DiscountMoney;
+            this.Detail = Detail;
+            this.Brand_ID = Brand_ID;
+        }
+
+
         public int ID { get; set; }
         public string Product_Name { get; set; }
         public int Catalog_ID { get; set; }
         public int Amount { get; set; }
         public decimal Price { get; set; }
         public string Image { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> DiscountMoney { get; set; }
+        public decimal Discount { get; set; } 
+        public decimal DiscountMoney { get; set; }
         public string Detail { get; set; }
-        public Nullable<int> Brand_ID { get; set; }
+        public int Brand_ID { get; set; }
     }
 }
