@@ -54,16 +54,9 @@ namespace LaptopManagement.pages
             {
                 RadioFmale.IsChecked = true;
             }
-            if (UserSingleTon.Instance.User.isDisable == true)
-            {
-                TextBlockActive.Text = "Đã khóa";
-                TextBlockActive.Foreground = Brushes.Red;
-            }
-            else
-            {
-                TextBlockActive.Text = "Đang hoạt động";
-                TextBlockActive.Foreground = Brushes.Green;
-            }
+ 
+            TextBlockActive.Text = "Đang hoạt động";
+            TextBlockActive.Foreground = Brushes.Green;
             ComboBoxRole.Text = bLL_Role.getRoleNameByID(UserSingleTon.Instance.User.Role_ID);
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -74,6 +67,7 @@ namespace LaptopManagement.pages
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
+
                     if (CheckBoxChangePass.IsChecked==true)
                     {
                         if (PasswordBoxOldPass.Password.Equals(Utils.DecryptString(UserSingleTon.Instance.User.password,Utils.passEncode)))

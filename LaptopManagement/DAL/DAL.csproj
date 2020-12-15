@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL_Combo.cs" />
     <Compile Include="DAL_Role.cs" />
     <Compile Include="DAL_User.cs" />
     <Compile Include="DAL_Login.cs" />

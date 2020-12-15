@@ -95,7 +95,7 @@ namespace BLL
         {
             DateTime dt = DateTime.ParseExact(datetime.ToString(), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
 
-            string s = dt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            string s = dt.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
             return s;
         }
     }

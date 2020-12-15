@@ -127,7 +127,7 @@
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem Content="Admin"/>
                     <ComboBoxItem Content="Nhân viên"/>
-                    <ComboBoxItem Content="Khách hàng"/>
+                    <ComboBoxItem IsSelected="True" Content="Khách hàng"/>
                 </ComboBox>
             </StackPanel>
 

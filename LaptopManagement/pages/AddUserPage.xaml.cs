@@ -25,9 +25,11 @@ namespace LaptopManagement.pages
         private BLL_User bLL_User = new BLL_User();
         private BLL_Role bLL_Role = new BLL_Role();
         private bool gender;
+        private ToastViewModel _vm;
         public AddUserPage()
         {
             InitializeComponent();
+            _vm = new ToastViewModel();
         }
 
         private void RadioMale_Checked(object sender, RoutedEventArgs e)
@@ -42,7 +44,22 @@ namespace LaptopManagement.pages
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            bLL_User.AddUser(new User(10,TextBoxUserName.Text,Utils.EncryptString(PasswordBox.Password,Utils.passEncode),TextBoxFirstName.Text,TextBoxLastName.Text,gender,DateTime.Parse(DatePickerBirthday.Text),TextBoxAddress.Text,DateTime.Parse(DatePickerJoinDate.Text),false,bLL_Role.getIDByRoleName(ComboBoxRole.Text)));
+            if (TextBoxFirstName.Text == "" || TextBoxLastName.Text == "" || TextBoxAddress.Text == "")
+            {
+                _vm.ShowError("Vui lòng nhập đầy đủ thông tin");
+            }
+            else
+            {
+                if (PasswordBox.Password.Equals(PasswordBoxConfirm.Password))
+                {
+                    bLL_User.AddUser(new User(10, TextBoxUserName.Text, Utils.EncryptString(PasswordBox.Password, Utils.passEncode), TextBoxFirstName.Text, TextBoxLastName.Text, gender, DateTime.Parse(DatePickerBirthday.Text), TextBoxAddress.Text, DateTime.Parse(DatePickerJoinDate.Text), false, bLL_Role.getIDByRoleName(ComboBoxRole.Text)));
+                    _vm.ShowSuccess("Thêm thành công");
+                }
+                else
+                {
+                    _vm.ShowError("Mật khẩu không khớp, vui lòng kiểm tra lại");
+                }
+            }
         }
     }
 }

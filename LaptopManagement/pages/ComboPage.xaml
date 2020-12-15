@@ -18,7 +18,79 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ComboPage">
 
-    <Grid Background="Aqua">
-        
+    <Grid
+         Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                <TextBox x:Name="TextBoxSearch"                         
+                    Width="300" 
+                    Height="30"
+                    Margin="5"
+                    materialDesign:HintAssist.Hint="🔍 Tìm Kiếm theo tên Combo"
+                    TextChanged="TextBoxSearch_TextChanged"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonAdd" Content="Thêm Combo" HorizontalAlignment="Right" Margin="5" Click="ButtonAdd_Click"/>
+                <Button x:Name="ButtonDelete" Content="Xóa" HorizontalAlignment="Right" Background="Red" Margin="5" Click="ButtonDelete_Click"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="DataGridCombo"               
+                Margin="0 8 0 0"
+                ItemsSource="{Binding Items3}"
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="#">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="CheckBoxDelete"
+                                     
+                                    Checked="ChecboxDelete_Checked"
+                                    Unchecked="ChecboxDelete_Unchecked"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Binding="{Binding Combo_Name}"
+                        Header="Tên Combo"
+                        IsReadOnly="True"/>
+                    <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Product_List}"
+                        Header="Sản phẩm Combo"
+                        IsReadOnly="True"/>
+                    <!-- set a max length to get an indicator in the editor -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding startDate}"
+                        Header="Ngày bắt đầu"
+                        IsReadOnly="True"/>
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding endDate}"
+                        Header="Ngày kết thúc"
+                        IsReadOnly="True"/>
+                    <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding totalMoney}"
+                        Header="Tổng tiền (VND)"
+                        IsReadOnly="True"/>
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding discount}"
+                        Header="Giảm giá (%)"
+                        IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Page>
