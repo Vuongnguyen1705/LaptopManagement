@@ -18,7 +18,88 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProductPage">
 
-    <Grid Background="Green">
-        
+    <Grid
+         Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                <TextBox x:Name="TextBoxSearch"                         
+                    Width="300" 
+                    Height="30"
+                    Margin="5"
+                    materialDesign:HintAssist.Hint="🔍 Tìm Kiếm"
+                    TextChanged="TextBoxSearch_TextChanged"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonDel" Content="Xóa sản phẩm" Background="Red" HorizontalAlignment="Right" Margin="5" Click="ButtonDel_Click"/>
+                <Button x:Name="ButtonAdd" Content="Thêm sản phẩm" HorizontalAlignment="Right" Margin="5" Click="ButtonAdd_Click"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="DataGridProduct"
+                MouseDoubleClick="DataGridProduct_MouseDoubleClick"
+                Margin="0 8 0 0"
+                
+                IsReadOnly="True"
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Chọn">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox                      
+                                    Checked="CheckBox_Checked"
+                                    Unchecked="CheckBox_Unchecked"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Binding="{Binding Product_Name}"
+                        Header="Tên sản phẩm"
+                        EditingElementStyle="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" />
+                    <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding catalog}"
+                        Header="Loại sản phẩm"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <!-- set a max length to get an indicator in the editor -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Amount}"
+                        Header="Số lượng"
+                        MaxLength="255"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Price}"
+                        Header="Giá"/>
+                    <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Discount}"
+                        Header="Giảm giá (%)"/>
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding DiscountMoney}"
+                        Header="Số tiền giảm"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <!--materialDesign:DataGridTextColumn
+                        Binding="{Binding Detail}"
+                        Header="Mô tả"/-->
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding brand}"
+                        Header="Thương hiệu"/>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Page>
+

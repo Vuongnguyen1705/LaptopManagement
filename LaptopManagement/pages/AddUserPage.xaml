@@ -38,7 +38,7 @@
                     Margin="0 5"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                    materialDesign:HintAssist.Hint="Tên đăng nhập"/>
+                    materialDesign:HintAssist.Hint="Tên đăng nhập" TextChanged="TextBoxUserName_TextChanged"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center">
@@ -126,7 +126,7 @@
                     materialDesign:HintAssist.Hint="Vai trò"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem Content="Admin"/>
-                    <ComboBoxItem Content="Nhân viên"/>
+                    <ComboBoxItem IsSelected="True" Content="Nhân viên"/>
                     <ComboBoxItem Content="Khách hàng"/>
                 </ComboBox>
             </StackPanel>

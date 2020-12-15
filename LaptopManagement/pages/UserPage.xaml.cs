@@ -48,7 +48,7 @@ namespace LaptopManagement.pages
             foreach (var item in new ObservableCollection<User>(bLL_User.getAllUser()))
             {
                 if (item.username != UserSingleTon.Instance.User.username)
-                    list.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), Utils.DateFormat((DateTime)item.birthDate), item.address, Utils.DateFormat((DateTime)item.joinDate), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
+                    list.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), item.birthDate.ToShortDateString(), item.address, item.joinDate.ToShortDateString(), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
             }
             DataGridUser.ItemsSource = list;
         }
