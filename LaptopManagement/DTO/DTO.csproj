@@ -66,6 +66,7 @@
       <DependentUpon>Laptop.tt</DependentUpon>
     </Compile>
     <Compile Include="format\ProductFormat.cs" />
+    <Compile Include="format\ComboFormat.cs" />
     <Compile Include="format\UserFormat.cs" />
     <Compile Include="Invoice.cs">
       <DependentUpon>Laptop.tt</DependentUpon>

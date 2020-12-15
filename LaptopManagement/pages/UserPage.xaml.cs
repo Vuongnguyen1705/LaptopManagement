@@ -37,22 +37,56 @@ namespace LaptopManagement.pages
         {
             InitializeComponent();
             _vm = new ToastViewModel();
-            ShowUser();
-            Filter();
+            SetVisiable();
             DataContext = this;
+        }
+        
+        private void SetVisiable()
+        {
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    GridRoot.Visibility = Visibility.Collapsed;
+                    ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
+                }), DispatcherPriority.Loaded);
+            }).Start();
+
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ShowUser();
+                }), DispatcherPriority.Loaded);                
+              
+            }).Start();
+            
         }
 
         public void ShowUser()
         {
-            ObservableCollection<UserFormat> list = new ObservableCollection<UserFormat>();
-            foreach (var item in new ObservableCollection<User>(bLL_User.getAllUser()))
+            new Thread(() =>
             {
-                if (item.username != UserSingleTon.Instance.User.username)
-                    list.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), item.birthDate.ToShortDateString(), item.address, item.joinDate.ToShortDateString(), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
-            }
-            DataGridUser.ItemsSource = list;
+                ObservableCollection<UserFormat> listUserFormat = new ObservableCollection<UserFormat>();
+                foreach (var item in bLL_User.getAllUser())
+                {
+
+                    if (item.username != UserSingleTon.Instance.User.username)
+                    {
+                        listUserFormat.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), Utils.DateFormat(item.birthDate), item.address, Utils.DateFormat(item.joinDate), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
+                    }
+                }
+                Dispatcher.BeginInvoke(new Action(() =>
+                {                    
+                    ImageAwesomeLoading.Visibility = Visibility.Collapsed;
+                    GridRoot.Visibility = Visibility.Visible;
+                    DataGridUser.ItemsSource = listUserFormat;
+                    Filter();
+
+                }), DispatcherPriority.Background);
+            }).Start();
         }
-        
+
         private void Filter()
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DataGridUser.ItemsSource);
@@ -65,7 +99,7 @@ namespace LaptopManagement.pages
                 return true;
             else
                 return ((item as UserFormat).username.IndexOf(TextBoxSearch.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-        } 
+        }
 
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -117,7 +151,7 @@ namespace LaptopManagement.pages
             UserFormat user = button.DataContext as UserFormat;
             int id = user.ID;
             bLL_User.EnableUser(id);
-            _vm.ShowSuccess("Tài khoản đã mở khóa");
+            //_vm.ShowSuccess("Tài khoản đã mở khóa");
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -127,9 +161,9 @@ namespace LaptopManagement.pages
 
         private void DataGridUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
-            UserFormat user = item.DataContext as UserFormat;
-            idUser = user.ID;
+            //var item = sender as DataGridCell;
+            //UserFormat user = item.DataContext as UserFormat;
+            //idUser = user.ID;
         }
     }
 }
