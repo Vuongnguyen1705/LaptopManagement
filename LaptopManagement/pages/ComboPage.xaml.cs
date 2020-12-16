@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace LaptopManagement.pages
 {
@@ -25,26 +27,66 @@ namespace LaptopManagement.pages
     public partial class ComboPage : Page
     {
         private BLL_Combo bLL_Combo;
+        private BLL_Product bLL_Product;
         private readonly ToastViewModel _vm;
-        private List<int> listIDCombo=new List<int>();
+        private List<int> listIDCombo = new List<int>();
         public ComboPage()
         {
             InitializeComponent();
             _vm = new ToastViewModel();
             bLL_Combo = new BLL_Combo();
-            ShowCombo();
-            Filter();
+            bLL_Product = new BLL_Product();
+            SetVisiable();
             DataContext = this;
+        }
+
+        private void SetVisiable()
+        {
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    GridRoot.Visibility = Visibility.Collapsed;
+                    ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
+                }), DispatcherPriority.Loaded);
+            }).Start();
+
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ShowCombo();
+                }), DispatcherPriority.Loaded);
+
+            }).Start();
         }
 
         public void ShowCombo()
         {
-            ObservableCollection<ComboFormat> list = new ObservableCollection<ComboFormat>();
-            foreach (var item in new ObservableCollection<Combo>(bLL_Combo.getAllCombo()))
+            new Thread(() =>
             {
-                list.Add(new ComboFormat(item.ID, item.Combo_Name, item.Product_List, item.startDate.ToShortDateString(), item.endDate.ToShortDateString(), item.totalMoney, item.discount));
-            }
-            DataGridCombo.ItemsSource = list;
+                ObservableCollection<ComboFormat> list = new ObservableCollection<ComboFormat>();
+                string[] temp_productList;
+                string products;
+                foreach (var item in new ObservableCollection<Combo>(bLL_Combo.getAllCombo()))
+                {
+                    products = "";
+                    temp_productList = item.Product_List.Split(';');
+                    foreach (var i in temp_productList)
+                    {
+                        products += bLL_Product.getProductNameByid(int.Parse(i)) + "\n";
+                    }
+                    list.Add(new ComboFormat(item.ID, item.Combo_Name, products.Trim(), item.startDate.ToShortDateString(), item.endDate.ToShortDateString(), item.totalMoney, item.discount));
+                }
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ImageAwesomeLoading.Visibility = Visibility.Collapsed;
+                    GridRoot.Visibility = Visibility.Visible;
+                    DataGridCombo.ItemsSource = list;
+                    Filter();
+                }), DispatcherPriority.Background);
+            }).Start();
+
         }
 
         private void Filter()
@@ -83,7 +125,7 @@ namespace LaptopManagement.pages
                         bLL_Combo.Delete(id);
                     }
                     _vm.ShowSuccess("Xóa thành công");
-                }                
+                }
             }
             else
             {
@@ -95,7 +137,7 @@ namespace LaptopManagement.pages
         {
             CheckBox check = sender as CheckBox;
             ComboFormat comboFormat = check.DataContext as ComboFormat;
-            listIDCombo.Add(comboFormat.ID);            
+            listIDCombo.Add(comboFormat.ID);
         }
 
         private void ChecboxDelete_Unchecked(object sender, RoutedEventArgs e)

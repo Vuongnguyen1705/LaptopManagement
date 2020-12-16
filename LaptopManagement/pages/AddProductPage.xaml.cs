@@ -90,7 +90,7 @@ namespace LaptopManagement.pages
                 }
                 else 
                 { 
-                    bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToDecimal(TextBoxDiscount.Text), 0, TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
+                    bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
                     noti.ShowSuccess("Thêm sản phẩm thành công.");
                 }
             }

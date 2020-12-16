@@ -12,14 +12,13 @@ namespace DTO
     using System;
     using System.Collections.Generic;
     
-    public partial class Combo
+    public partial class OrderDetail
     {
         public int ID { get; set; }
-        public string Combo_Name { get; set; }
-        public string Product_List { get; set; }
-        public System.DateTime startDate { get; set; }
-        public System.DateTime endDate { get; set; }
-        public decimal totalMoney { get; set; }
-        public int discount { get; set; }
+        public Nullable<int> Order_Id { get; set; }
+        public Nullable<int> Product_Id { get; set; }
+        public Nullable<int> Combo_Id { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<double> Price { get; set; }
     }
 }

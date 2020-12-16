@@ -89,6 +89,7 @@
     </ApplicationDefinition>
     <Compile Include="pages\AddProductPage.xaml.cs">
       <DependentUpon>AddProductPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\AddComboPage.xaml.cs">
       <DependentUpon>AddComboPage.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="pages\AddProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pages\AddComboPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,7 +203,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

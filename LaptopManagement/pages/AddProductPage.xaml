@@ -14,7 +14,7 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="AddProductPage">
 
     <Grid>
@@ -30,11 +30,9 @@
                 <RowDefinition Height="3.7*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" VerticalAlignment="Center">
-                <TextBox Name="TextBoxProductName"
-                  
+                <TextBox Name="TextBoxProductName"                  
                     Width="250"                
-                    FontSize="15"
-                    
+                    FontSize="15"                    
                     Margin="6 20 0 0"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
@@ -125,18 +123,17 @@
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                     materialDesign:HintAssist.Hint="Giá sản phẩm"/>
             </StackPanel>
-                 <Image Name="ImageBox" Grid.Row="3"
-                    Margin="7.5 0 0 50"
-                    Width="250"
-                    Height="250"
-                    MouseLeftButtonDown="ImageBox_MouseLeftButtonDown"
-                    Source="/images/upload.png" Stretch="Fill" />                   
-            
+            <Image Name="ImageBox" Grid.Row="3"
+                Margin="7.5 0 0 50"
+                Width="250"
+                Height="250"
+                MouseLeftButtonDown="ImageBox_MouseLeftButtonDown"
+                Source="/images/upload.png" Stretch="Fill" />                               
         </Grid>
         <Grid Grid.Column="2">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Button x:Name="ButtonAdd" Content="Thêm sản phẩm" Background="Green" HorizontalAlignment="Center" Width="200" Margin="10" Click="ButtonAdd_Click" />
-                <Button x:Name="ButtonReset" Content="Đặt lại"  Background="Red" HorizontalAlignment="Center" Width="200" Margin="10" Click="ButtonReset_Click"/>
+                <Button x:Name="ButtonReset" Content="Đặt lại"  Background="DarkBlue" HorizontalAlignment="Center" Width="200" Margin="10" Click="ButtonReset_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

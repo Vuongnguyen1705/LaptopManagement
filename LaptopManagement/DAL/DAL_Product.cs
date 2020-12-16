@@ -61,5 +61,10 @@ namespace DAL
             result.Brand_ID = product.Brand_ID;
             db.SaveChanges();
         }
+
+        public string getProductNameByid(int id)
+        {
+            return db.Products.Where(x => x.ID == id).Select(x => x.Product_Name).SingleOrDefault();
+        }
     }
 }

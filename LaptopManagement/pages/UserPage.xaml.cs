@@ -59,8 +59,7 @@ namespace LaptopManagement.pages
                     ShowUser();
                 }), DispatcherPriority.Loaded);                
               
-            }).Start();
-            
+            }).Start();            
         }
 
         public void ShowUser()
@@ -73,7 +72,7 @@ namespace LaptopManagement.pages
 
                     if (item.username != UserSingleTon.Instance.User.username)
                     {
-                        listUserFormat.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), Utils.DateFormat(item.birthDate), item.address, Utils.DateFormat(item.joinDate), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
+                        listUserFormat.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender),((DateTime)item.birthDate).ToShortDateString(), item.address, ((DateTime)item.joinDate).ToShortDateString(), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
                     }
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -165,5 +164,6 @@ namespace LaptopManagement.pages
             //UserFormat user = item.DataContext as UserFormat;
             //idUser = user.ID;
         }
+
     }
 }
