@@ -26,14 +26,22 @@ namespace BLL
         {
             dAL_Product.deleteProductByID(id);
         }
+
         public void AddProduct(Product product)
         {
             dAL_Product.AddProduct(product);
         }
+
         public void UpdateProduct(Product product)
         {
             dAL_Product.UpdateProduct(product);
         }
-        
+
+        public string getProductNameByid(int id)
+        {
+            return dAL_Product.getProductNameByid(id);
+        }
+
+
     }
 }

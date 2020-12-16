@@ -11,27 +11,25 @@ namespace DTO
 {
     using System;
     using System.Collections.Generic;
-
     
     public partial class Product
     {
         public Product()
         {
         }
-        public Product(int iD, string Product_Name, int Catalog_ID, int Amount, decimal Price, string Image, decimal Discount, decimal DiscountMoney, string Detail, int Brand_ID)
+
+        public Product(int iD, string product_Name, int catalog_ID, int amount, decimal price, string image, int? discount, string detail, int? brand_ID)
         {
             ID = iD;
-            this.Product_Name = Product_Name;
-            this.Catalog_ID = Catalog_ID;
-            this.Amount = Amount;
-            this.Price = Price;
-            this.Image = Image;
-            this.Discount = Discount;
-            this.DiscountMoney = DiscountMoney;
-            this.Detail = Detail;
-            this.Brand_ID = Brand_ID;
+            Product_Name = product_Name;
+            Catalog_ID = catalog_ID;
+            Amount = amount;
+            Price = price;
+            Image = image;
+            Discount = discount;
+            Detail = detail;
+            Brand_ID = brand_ID;
         }
-
 
         public int ID { get; set; }
         public string Product_Name { get; set; }
@@ -39,9 +37,8 @@ namespace DTO
         public int Amount { get; set; }
         public decimal Price { get; set; }
         public string Image { get; set; }
-        public decimal Discount { get; set; } 
-        public decimal DiscountMoney { get; set; }
+        public Nullable<int> Discount { get; set; }
         public string Detail { get; set; }
-        public int Brand_ID { get; set; }
+        public Nullable<int> Brand_ID { get; set; }
     }
 }

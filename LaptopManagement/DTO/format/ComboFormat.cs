@@ -20,11 +20,11 @@ namespace DTO.format
         }
 
         public int ID { get; set; }
-            public string Combo_Name { get; set; }
-            public string Product_List { get; set; }
-            public string startDate { get; set; }
-            public string endDate { get; set; }
-            public decimal totalMoney { get; set; }
-            public int discount { get; set; }
+        public string Combo_Name { get; set; }
+        public string Product_List { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public decimal totalMoney { get; set; }
+        public int discount { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace LaptopManagement.pages
             TextBoxDiscount.Text = p.Discount.ToString();
             TextAreaDetail.Text = p.Detail.ToString();
             ComboBoxCatalog.SelectedIndex = p.Catalog_ID - 1;
-            ComboBoxBrand.SelectedIndex = p.Brand_ID - 1;
+            ComboBoxBrand.SelectedIndex =(int) p.Brand_ID - 1;
             //ImageBox.Source = new BitmapImage (new Uri(p.Image));   --Lỗi: đường dẫn cứng thì đọc, đường dẫn động error
         }
         private void ShowProductCatalog()
@@ -106,7 +106,7 @@ namespace LaptopManagement.pages
                 }
                 else
                 {
-                    bLL_Product.UpdateProduct(new Product( id, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToDecimal(TextBoxDiscount.Text), 0, TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
+                    bLL_Product.UpdateProduct(new Product( id, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()),Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
                     noti.ShowSuccess("Chỉnh sửa sản phẩm thành công.");
                 }
             }
@@ -116,7 +116,7 @@ namespace LaptopManagement.pages
 
         private void ButtonReset_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn đật lại?", "Đặt lại", MessageBoxButton.OKCancel);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn đặt lại?", "Đặt lại", MessageBoxButton.OKCancel);
             if (messageBoxResult == MessageBoxResult.OK)
             {
                 TextBoxProductName.Text = "";

@@ -33,25 +33,55 @@ namespace LaptopManagement.pages
         private BLL_Catalog bLL_Catalog = new BLL_Catalog();
         private BLL_Brand bLL_Brand = new BLL_Brand();
         private List<int> listIDProduct = new List<int>();
-        private ToastViewModel noti;
+        private ToastViewModel noti;        
         public ProductPage()
         {
             InitializeComponent();
-            ShowProduct();
-            Filter();
+            SetVisiable();
             noti = new ToastViewModel();
             
         }
 
+        private void SetVisiable()
+        {
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    GridRoot.Visibility = Visibility.Collapsed;
+                    ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
+                }), DispatcherPriority.Loaded);
+            }).Start();
+
+            new Thread(() =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ShowProduct();
+                }), DispatcherPriority.Loaded);
+
+            }).Start();
+
+        }
+
         public void ShowProduct()
         {
-            ObservableCollection<ProductFormat> list = new ObservableCollection<ProductFormat>();
-            foreach (var item in new ObservableCollection<Product>(bLL_Product.getAllProduct()))
+            new Thread(() =>
             {
-               // if (item.username != UserSingleTon.Instance.User.username)
-                    list.Add(new ProductFormat(item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount,  item.Price, item.Image, item.Discount, item.DiscountMoney, item.Detail, bLL_Brand.getBrandNameByID(item.Brand_ID)));
-            }
-            DataGridProduct.ItemsSource = list;
+                ObservableCollection<ProductFormat> list = new ObservableCollection<ProductFormat>();
+                foreach (var item in new ObservableCollection<Product>(bLL_Product.getAllProduct()))
+                {
+                    list.Add(new ProductFormat(false,item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount, item.Price, item.Image, (int)item.Discount, item.Detail, bLL_Brand.getBrandNameByID((int)item.Brand_ID)));
+                }
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    ImageAwesomeLoading.Visibility = Visibility.Collapsed;
+                    GridRoot.Visibility = Visibility.Visible;
+                    DataGridProduct.ItemsSource = list;
+                    Filter();
+                }), DispatcherPriority.Background);
+            }).Start();
+            
         }
 
         private void Filter()
@@ -91,7 +121,8 @@ namespace LaptopManagement.pages
             CheckBox check = sender as CheckBox;
             ProductFormat format = check.DataContext as ProductFormat;
             listIDProduct.Add(format.ID);
-            noti.ShowInformation(format.ID.ToString());
+            format.isCheck = true;
+            //noti.ShowInformation(format.ID.ToString());
 
         }
 
@@ -100,6 +131,7 @@ namespace LaptopManagement.pages
             CheckBox check = sender as CheckBox;
             ProductFormat format = check.DataContext as ProductFormat;
             listIDProduct.Remove(format.ID);
+            format.isCheck = false;
             //noti.ShowInformation(format.ID.ToString());
             
         }

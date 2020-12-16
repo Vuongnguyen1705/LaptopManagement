@@ -17,5 +17,7 @@ namespace DTO
         public int ID { get; set; }
         public Nullable<int> Product_Id { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> Combo_ID { get; set; }
+        public int UserID { get; set; }
     }
 }

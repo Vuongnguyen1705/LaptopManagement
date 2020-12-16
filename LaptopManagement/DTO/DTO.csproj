@@ -89,6 +89,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Laptop.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>Laptop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetail.cs">
+      <DependentUpon>Laptop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>Laptop.tt</DependentUpon>
     </Compile>

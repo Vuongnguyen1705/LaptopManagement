@@ -18,7 +18,7 @@ namespace DTO
         {
         }
 
-        public User(int iD, string username, string password, string firstName, string lastName, bool gender, DateTime birthDate, string address, DateTime joinDate, bool isDisable, int role_ID)
+        public User(int iD, string username, string password, string firstName, string lastName, bool gender, DateTime? birthDate, string address, DateTime? joinDate, bool isDisable, int role_ID)
         {
             ID = iD;
             this.username = username;
@@ -39,9 +39,9 @@ namespace DTO
         public string firstName { get; set; }
         public string lastName { get; set; }
         public bool gender { get; set; }
-        public DateTime birthDate { get; set; }
+        public Nullable<System.DateTime> birthDate { get; set; }
         public string address { get; set; }
-        public DateTime joinDate { get; set; }
+        public Nullable<System.DateTime> joinDate { get; set; }
         public bool isDisable { get; set; }
         public int Role_ID { get; set; }
     }
