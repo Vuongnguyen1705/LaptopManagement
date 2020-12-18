@@ -33,13 +33,13 @@ namespace LaptopManagement.pages
         private BLL_Catalog bLL_Catalog = new BLL_Catalog();
         private BLL_Brand bLL_Brand = new BLL_Brand();
         private List<int> listIDProduct = new List<int>();
-        private ToastViewModel noti;        
+        private ToastViewModel noti;
         public ProductPage()
         {
             InitializeComponent();
             SetVisiable();
             noti = new ToastViewModel();
-            
+
         }
 
         private void SetVisiable()
@@ -71,7 +71,7 @@ namespace LaptopManagement.pages
                 ObservableCollection<ProductFormat> list = new ObservableCollection<ProductFormat>();
                 foreach (var item in new ObservableCollection<Product>(bLL_Product.getAllProduct()))
                 {
-                    list.Add(new ProductFormat(false,item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount, item.Price, item.Image, (int)item.Discount, item.Detail, bLL_Brand.getBrandNameByID((int)item.Brand_ID)));
+                    list.Add(new ProductFormat(false, item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount, item.Price, item.Image, (int)item.Discount, item.Detail, bLL_Brand.getBrandNameByID((int)item.Brand_ID)));
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -81,7 +81,7 @@ namespace LaptopManagement.pages
                     Filter();
                 }), DispatcherPriority.Background);
             }).Start();
-            
+
         }
 
         private void Filter()
@@ -99,8 +99,8 @@ namespace LaptopManagement.pages
         }
 
         private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        { 
-            CollectionViewSource.GetDefaultView(DataGridProduct.ItemsSource).Refresh();            
+        {
+            CollectionViewSource.GetDefaultView(DataGridProduct.ItemsSource).Refresh();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -112,12 +112,13 @@ namespace LaptopManagement.pages
         {
             ProductFormat product = (ProductFormat)DataGridProduct.SelectedItem;
             //MessageBox.Show(product.Product_Name.ToString());
-            NavigationService.Navigate(new EditProductPage(product.Product_Name.ToString()));
+            if (product != null)
+                NavigationService.Navigate(new EditProductPage(product.Product_Name.ToString()));
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            
+
             CheckBox check = sender as CheckBox;
             ProductFormat format = check.DataContext as ProductFormat;
             listIDProduct.Add(format.ID);
@@ -133,13 +134,13 @@ namespace LaptopManagement.pages
             listIDProduct.Remove(format.ID);
             format.isCheck = false;
             //noti.ShowInformation(format.ID.ToString());
-            
+
         }
 
         private void ButtonDel_Click(object sender, RoutedEventArgs e)
         {
             if (listIDProduct.Count != 0)
-            {           
+            {
                 MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xóa sản phẩm", MessageBoxButton.OKCancel);
                 if (messageBoxResult == MessageBoxResult.OK)
                 {
@@ -155,7 +156,7 @@ namespace LaptopManagement.pages
             {
                 noti.ShowWarning("Vui lòng chọn sản phẩm để xóa");
             }
-            
+
         }
     }
 }

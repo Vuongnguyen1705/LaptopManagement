@@ -28,6 +28,7 @@ namespace LaptopManagement.pages
         private BLL_Brand bLL_Brand = new BLL_Brand();
         private BLL_Product bLL_Product = new BLL_Product();
         ToastViewModel noti = new ToastViewModel();
+        private bool flagProductName = false, flagDetail = false, flagAmount = false, flagDiscount = false, flagPrice = false;
         public AddProductPage()
         {
 
@@ -38,17 +39,13 @@ namespace LaptopManagement.pages
 
         private void ShowProductCatalog()
         {           
-            ComboBoxCatalog.ItemsSource= bLL_Catalog.getAllCatalog();       
+            ComboBoxCatalog.ItemsSource= bLL_Catalog.getAllCatalog();
+            ComboBoxCatalog.SelectedIndex = 1;
         }
         private void ShowProductBrand()
         {
             ComboBoxBrand.ItemsSource = bLL_Brand.getAllBrand();
-        }
-
-
-        private void TextBoxProductName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            ComboBoxBrand.SelectedIndex = 1;
         }
 
         private void ImageBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -78,21 +75,17 @@ namespace LaptopManagement.pages
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (TextBoxProductName.Text == "" || TextAreaDetail.Text == "" || ComboBoxCatalog.SelectedIndex == -1 || ComboBoxBrand.SelectedIndex == -1 || TextBoxAmount.Text == "" || TextBoxDiscount.Text == "")
+            //MessageBox.Show("name: " + flagProductName + " price: " + flagPrice + " discount: " + flagDiscount + " detail:" + flagDetail);
+            if (flagAmount==true && flagDetail==true && flagDiscount==true && flagPrice==true && flagProductName==true)
             {
-                noti.ShowError("Vui lòng nhập đầy đủ thông tin.");
+                bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
+                noti.ShowSuccess("Thêm sản phẩm thành công.");
             }
             else
             {
-                if (Convert.ToInt32(TextBoxDiscount.Text) > 100)
-                {
-                    noti.ShowError("Tỉ lệ giảm giá không được lớn hơn 100%");
-                }
-                else 
-                { 
-                    bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
-                    noti.ShowSuccess("Thêm sản phẩm thành công.");
-                }
+                    noti.ShowError("Vui lòng nhập đầy đủ thông tin");
+    
+
             }
             //MessageBox.Show("/images/Products/"+System.IO.Path.GetFileName(ImageBox.Source.ToString()));
             //MessageBox.Show((ComboBoxCatalog.SelectedItem).ToString());            
@@ -117,7 +110,122 @@ namespace LaptopManagement.pages
         private void ComboBoxCatalog_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
+        }
 
+        private void TextBoxProductName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                TextBlockProductNameError.Visibility = Visibility.Visible;
+                TextBlockProductNameError.Text = "Không được để trống ô này";
+                flagProductName = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(textBox.Text, @"^[a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s_]+$"))
+                {
+                    TextBlockProductNameError.Visibility = Visibility.Visible;
+                    TextBlockProductNameError.Text = "Không được nhập ký tự đặt biệt";
+                    flagProductName = false;
+                }
+                else
+                {
+                    TextBlockProductNameError.Visibility = Visibility.Collapsed;
+                    flagProductName = true;
+                }
+            }
+        }
+
+        private void TextBoxAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                TextBlockAmountError.Visibility = Visibility.Visible;
+                TextBlockAmountError.Text = "Không được để trống ô này";
+                flagAmount = false;
+            }
+            else
+            {
+                if (Convert.ToInt32(textBox.Text) < 0)
+                {
+                    TextBlockAmountError.Visibility = Visibility.Visible;
+                    TextBlockAmountError.Text = "Không được nhập số âm";
+                    flagAmount = false;
+                }
+                else
+                {
+                    TextBlockAmountError.Visibility = Visibility.Collapsed;
+                    flagAmount = true;
+                }
+            }
+        }
+
+        private void TextBoxDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                TextBlockDiscountError.Visibility = Visibility.Visible;
+                TextBlockDiscountError.Text = "Không được để trống ô này";
+                flagDiscount = false;
+            }
+            else
+            {
+                if (Convert.ToInt32(textBox.Text) < 0 || Convert.ToInt32(textBox.Text) > 99)
+                {
+                    TextBlockDiscountError.Visibility = Visibility.Visible;
+                    TextBlockDiscountError.Text = "Giảm giá từ 0 đến 99";
+                    flagDiscount = false;
+                }
+                else
+                {
+                    TextBlockDiscountError.Visibility = Visibility.Collapsed;
+                    flagDiscount = true;
+                }
+            }
+        }
+
+        private void TextBoxPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                TextBlockPriceError.Visibility = Visibility.Visible;
+                TextBlockPriceError.Text = "Không được để trống ô này";
+                flagPrice = false;
+            }
+            else
+            {
+                if (Convert.ToInt32(textBox.Text) < 0 )
+                {
+                    TextBlockPriceError.Visibility = Visibility.Visible;
+                    TextBlockPriceError.Text = "Không được nhập số âm";
+                    flagPrice = false;
+                }
+                else
+                {
+                    TextBlockPriceError.Visibility = Visibility.Collapsed;
+                    flagPrice = true;
+                }
+            }
+        }
+
+        private void TextAreaDetail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                TextBlockDetailError.Visibility = Visibility.Visible;
+                TextBlockDetailError.Text = "Không được để trống ô này";
+                flagDetail = false;
+            }
+            else
+            {
+                TextBlockDetailError.Visibility = Visibility.Collapsed;
+                flagDetail = true;
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace LaptopManagement.pages
             SetVisiable();
             DataContext = this;
         }
-        
+
         private void SetVisiable()
         {
             new Thread(() =>
@@ -57,9 +57,9 @@ namespace LaptopManagement.pages
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     ShowUser();
-                }), DispatcherPriority.Loaded);                
-              
-            }).Start();            
+                }), DispatcherPriority.Loaded);
+
+            }).Start();
         }
 
         public void ShowUser()
@@ -72,11 +72,11 @@ namespace LaptopManagement.pages
 
                     if (item.username != UserSingleTon.Instance.User.username)
                     {
-                        listUserFormat.Add(new UserFormat(item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender),((DateTime)item.birthDate).ToShortDateString(), item.address, ((DateTime)item.joinDate).ToShortDateString(), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
+                        listUserFormat.Add(new UserFormat(false, item.ID, item.username, item.password, item.firstName + " " + item.lastName, bLL_User.getGender(item.gender), ((DateTime)item.birthDate).ToShortDateString(), item.address, ((DateTime)item.joinDate).ToShortDateString(), item.isDisable, bLL_Role.getRoleNameByID(item.Role_ID)));
                     }
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
-                {                    
+                {
                     ImageAwesomeLoading.Visibility = Visibility.Collapsed;
                     GridRoot.Visibility = Visibility.Visible;
                     DataGridUser.ItemsSource = listUserFormat;
@@ -140,6 +140,7 @@ namespace LaptopManagement.pages
             CheckBox button = sender as CheckBox;
             UserFormat user = button.DataContext as UserFormat;
             int id = user.ID;
+            user.isCheck = true;
             bLL_User.DisableUser(id);
             //_vm.ShowInformation("Đã khóa tài khoản");
         }
@@ -149,6 +150,7 @@ namespace LaptopManagement.pages
             CheckBox button = sender as CheckBox;
             UserFormat user = button.DataContext as UserFormat;
             int id = user.ID;
+            user.isCheck = false;
             bLL_User.EnableUser(id);
             //_vm.ShowSuccess("Tài khoản đã mở khóa");
         }

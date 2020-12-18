@@ -34,13 +34,14 @@
                     Width="250"                
                     FontSize="15"                    
                     Margin="6 20 0 0"
+                    TextChanged="TextBoxProductName_TextChanged"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                    materialDesign:HintAssist.Hint="Tên sản phẩm" TextChanged="TextBoxProductName_TextChanged"/>
+                    materialDesign:HintAssist.Hint="Tên sản phẩm"/>
+                <TextBlock Name="TextBlockProductNameError" Margin="5" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <ComboBox
-                   
+                <ComboBox                   
                     HorizontalAlignment="Left"
                     Width="250"
                     Margin="6 10 0 0"
@@ -64,9 +65,10 @@
                     Height="330"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
+                    TextChanged="TextAreaDetail_TextChanged"
                     VerticalScrollBarVisibility="Auto"
-                    materialDesign:HintAssist.Hint="Mô tả sản phẩm"
-                    IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+                    materialDesign:HintAssist.Hint="Mô tả sản phẩm" />
+                <TextBlock Name="TextBlockDetailError" Margin="5" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1">
@@ -92,43 +94,54 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
-                <TextBox Name="TextBoxAmount"  
-                    Width="120"                
-                    FontSize="15"
-                    PreviewTextInput="NumberValidation"
-                    Margin="7.5 0 0 0"
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                    materialDesign:HintAssist.Hint="Số lượng"/>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Name="TextBoxAmount"  
+                        Width="120"                
+                        FontSize="15"
+                        MaxLength="5"
+                        TextChanged="TextBoxAmount_TextChanged"
+                        PreviewTextInput="NumberValidation"
+                        Margin="7.5 0 0 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                        materialDesign:HintAssist.Hint="Số lượng"/>
 
-                <TextBox Name="TextBoxDiscount"
-                  
-                    Width="120"                
-                    FontSize="15"
-                    PreviewTextInput="NumberValidation"
-                    Margin="7.5 0 0 0"
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                    materialDesign:HintAssist.Hint="Gỉảm giá (%)"/>
+                    <TextBox Name="TextBoxDiscount"
+                        TextChanged="TextBoxDiscount_TextChanged"
+                        Width="120"                
+                        FontSize="15"
+                        MaxLength="2"
+                        PreviewTextInput="NumberValidation"
+                        Margin="7.5 0 0 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                        materialDesign:HintAssist.Hint="Gỉảm giá (%)"/>
+                </StackPanel>
+                <TextBlock Name="TextBlockAmountError" Margin="5" Visibility="Collapsed" Foreground="Red"/>
+                <TextBlock Name="TextBlockDiscountError" Margin="5" Visibility="Collapsed" Foreground="Red"/>
+
+
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Center">
                 <TextBox Name="TextBoxPrice"
-                  
+                    TextChanged="TextBoxPrice_TextChanged"
                     Width="250"                
                     FontSize="15"
+                    MaxLength="9"
                     PreviewTextInput="NumberValidation"
                     Margin="7.5 0 0 0"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                     materialDesign:HintAssist.Hint="Giá sản phẩm"/>
+                <TextBlock Name="TextBlockPriceError" Visibility="Collapsed" Margin="5" Foreground="Red"/>
             </StackPanel>
             <Image Name="ImageBox" Grid.Row="3"
                 Margin="7.5 0 0 50"
                 Width="250"
                 Height="250"
                 MouseLeftButtonDown="ImageBox_MouseLeftButtonDown"
-                Source="/images/upload.png" Stretch="Fill" />                               
+                Source="/images/upload.png" Stretch="UniformToFill" />                               
         </Grid>
         <Grid Grid.Column="2">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">

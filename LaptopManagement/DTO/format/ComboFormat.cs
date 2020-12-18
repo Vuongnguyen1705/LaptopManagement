@@ -8,8 +8,9 @@ namespace DTO.format
 {
     public class ComboFormat
     {
-        public ComboFormat(int iD, string combo_Name, string product_List, string startDate, string endDate, decimal totalMoney, int discount)
+        public ComboFormat(bool isCheck, int iD, string combo_Name, string product_List, string startDate, string endDate, decimal totalMoney, int discount)
         {
+            this.isCheck = isCheck;
             ID = iD;
             Combo_Name = combo_Name;
             Product_List = product_List;
@@ -19,6 +20,7 @@ namespace DTO.format
             this.discount = discount;
         }
 
+        public bool isCheck { get; set; }
         public int ID { get; set; }
         public string Combo_Name { get; set; }
         public string Product_List { get; set; }

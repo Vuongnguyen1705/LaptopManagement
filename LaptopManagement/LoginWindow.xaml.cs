@@ -58,12 +58,12 @@ namespace LaptopManagement
                             break;
                         case 1:
                             UserSingleTon.Instance.User = bLL_Employee.getUserByUsername(username);
-                            new MainWindow().Show();
+                            new MainWindow(1).Show();
                             Close();
                             break;
                         case 2:
                             UserSingleTon.Instance.User = bLL_Employee.getUserByUsername(username);
-                            new MainWindow().Show();
+                            new MainWindow(2).Show();
                             Close();
                             break;
                         case 3:

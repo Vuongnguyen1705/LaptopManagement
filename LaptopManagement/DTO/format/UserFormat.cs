@@ -8,8 +8,9 @@ namespace DTO.format
 {
     public class UserFormat
     {
-        public UserFormat(int iD, string username, string password, string fullName, string gender, string birthDate, string address, string joinDate, bool isActive, string role)
+        public UserFormat(bool isCheck,int iD, string username, string password, string fullName, string gender, string birthDate, string address, string joinDate, bool isActive, string role)
         {
+            this.isCheck = isCheck;
             ID = iD;
             this.username = username;
             this.password = password;
@@ -22,6 +23,7 @@ namespace DTO.format
             this.role = role;
         }
 
+        public bool isCheck { get; set; }
         public int ID { get; set; }
         public string username { get; set; }
         public string password { get; set; }
