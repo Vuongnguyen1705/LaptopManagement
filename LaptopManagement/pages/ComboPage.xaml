@@ -28,13 +28,13 @@
             </Grid.RowDefinitions>
             <Grid>
                 <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Left">
+                    HorizontalAlignment="Left">
                     <TextBox x:Name="TextBoxSearch"                         
-                    Width="300" 
-                    Height="30"
-                    Margin="5"
-                    materialDesign:HintAssist.Hint="🔍 Tìm Kiếm theo tên Combo"
-                    TextChanged="TextBoxSearch_TextChanged"/>
+                        Width="300" 
+                        Height="30"
+                        Margin="5"
+                        materialDesign:HintAssist.Hint="🔍 Tìm Kiếm theo tên Combo"
+                        TextChanged="TextBoxSearch_TextChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -46,20 +46,21 @@
 
             <Grid Grid.Row="1">
                 <DataGrid x:Name="DataGridCombo"               
-                Margin="0 8 0 0"
-                ItemsSource="{Binding Items3}"
-                CanUserSortColumns="True"
-                CanUserAddRows="False"
-                AutoGenerateColumns="False"
-                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                    Margin="0 8 0 0"
+                    ItemsSource="{Binding Items3}"
+                    CanUserSortColumns="True"
+                    CanUserAddRows="False" MouseDoubleClick="DataGridCombo_MouseDoubleClick"
+                    AutoGenerateColumns="False"
+                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                    materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="#">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox x:Name="CheckBoxDelete"                                     
-                                    Checked="ChecboxDelete_Checked"
-                                    Unchecked="ChecboxDelete_Unchecked"/>
+                                    <CheckBox x:Name="CheckBoxDelete" 
+                                        IsChecked="{Binding isCheck}"
+                                        Checked="ChecboxDelete_Checked"
+                                        Unchecked="ChecboxDelete_Unchecked"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -67,21 +68,21 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  VerticalAlignment="Center"                                   
-                                   Text="{Binding Combo_Name}" />
+                                        Text="{Binding Combo_Name}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
                         <materialDesign:DataGridTextColumn 
-                        Binding="{Binding Product_List}"
-                        Header="Sản phẩm Combo" 
-                        IsReadOnly="True"/>
+                            Binding="{Binding Product_List}"
+                            Header="Sản phẩm Combo" 
+                            IsReadOnly="True"/>
                         <!-- set a max length to get an indicator in the editor -->
                         <DataGridTemplateColumn Header="Ngày bắt đầu" SortMemberPath="startDate">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  VerticalAlignment="Center"                                   
-                                   Text="{Binding startDate}" />
+                                        Text="{Binding startDate}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -89,7 +90,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  VerticalAlignment="Center"                                   
-                                   Text="{Binding endDate}" />
+                                        Text="{Binding endDate}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -98,7 +99,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  VerticalAlignment="Center"                                   
-                                   Text="{Binding totalMoney}" />
+                                        Text="{Binding totalMoney}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -106,7 +107,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock  VerticalAlignment="Center"                                   
-                                   Text="{Binding discount}" />
+                                        Text="{Binding discount}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

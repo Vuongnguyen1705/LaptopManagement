@@ -1,0 +1,239 @@
+﻿<Page xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  x:Class="LaptopManagement.pages.AddComboPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LaptopManagement.pages"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="AddComboPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Name="TextBoxComboName"
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    TextChanged="TextBoxComboName_TextChanged"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Tên Combo"/>
+                <TextBlock Name="TextBlockComboNameError" Visibility="Collapsed" Foreground="Red"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <DatePicker Name="DatePickerStartDate"
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    Focusable="False"
+                    SelectedDate="{x:Static sys:DateTime.Today}"
+                    DisplayDateEnd="{Binding Path=Text, ElementName=DatePickerEndDate}"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                    materialDesign:HintAssist.Hint="Ngày bắt đầu"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <DatePicker Name="DatePickerEndDate"
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    Focusable="False"
+                    SelectedDate="{x:Static sys:DateTime.Today}"
+                    DisplayDateStart="{Binding Path=Text, ElementName=DatePickerStartDate}"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                    materialDesign:HintAssist.Hint="Ngày kết thúc"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Name="TextBoxDiscount"
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    MaxLength="2"                    
+                    TextChanged="TextBoxDiscount_TextChanged"
+                    PreviewTextInput="NumberValidation"                    
+                    KeyUp="TextBoxDiscount_KeyUp"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Giảm giá (%)"/>
+                <TextBlock Name="TextBlockDiscountError" Visibility="Collapsed" Foreground="Red"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Name="TextBoxTotalMoney"
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    TextChanged="TextBoxTotalMoney_TextChanged"
+                    IsReadOnly="True"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Tổng tiền (VND)"/>
+            </StackPanel>
+            <StackPanel Grid.Row="5"
+                Grid.RowSpan="2"
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center">
+                <Image Name="ImageCombo"
+                    Width="150"                
+                    Height="150"
+                    Margin="0 5"
+                    Stretch="Fill"
+                    Source="/images/upload.png"
+                    MouseDown="ImageCombo_MouseDown"
+                    HorizontalAlignment="Left"                   
+                    materialDesign:HintAssist.Hint="Tổng tiền (VND)"/>
+            </StackPanel>
+            
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="8.5*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock 
+                        Text="Thêm sản phẩm vào combo"
+                        FontSize="18"
+                        Margin="0 10"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="1">
+                        <Grid Name="GridRoot">
+                            <DataGrid x:Name="DataGridCombo"               
+                                Margin="0 8 0 0"
+                                CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Chọn">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox x:Name="CheckBoxSelect"                                     
+                                                    Checked="CheckBoxSelect_Checked"
+                                                    Unchecked="CheckBoxSelect_Unchecked"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Tên sản phẩm" SortMemberPath="Product_Name">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  VerticalAlignment="Center"                                   
+                                                    Text="{Binding Product_Name}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Số lượng" SortMemberPath="Amount">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  VerticalAlignment="Center"                                   
+                                                    Text="{Binding Amount}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <fa:ImageAwesome x:Name="ImageAwesomeLoading" Visibility="Hidden" Icon="Spinner" Spin="True" Height="32" Width="32" />
+                    </Grid>
+                    
+                </Grid>
+                <StackPanel Grid.Column="1">
+                    <Button 
+                        Name="ButtonSelect"
+                        Margin="10"
+                        VerticalAlignment="Top"
+                        Click="ButtonSelect_Click"
+                        Content="Chọn"/>
+                    <Button 
+                        Name="ButtonReSelect"
+                        Margin="10"
+                        Background="Orange"
+                        VerticalAlignment="Top"
+                        Click="ButtonReSelect_Click"
+                        Content="Chọn lại"/>
+                </StackPanel>
+                
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Các sản phẩm đã chọn"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Margin="10"
+                        HorizontalAlignment="Center"/>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel Name="WrapPanelProductSelected" ScrollViewer.CanContentScroll="True"
+                            Orientation="Horizontal"
+                            Margin="10">
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <StackPanel Grid.Column="1" 
+                    Margin="5">
+                    <TextBlock Text="Giá tiền combo (VND): "
+                        FontWeight="Bold"
+                        Margin="10"
+                        FontSize="16"/>
+                    <TextBlock x:Name="TextBlockPriceCombo"
+                        Height="30px"
+                        Margin="10 0"
+                        FontSize="16"/>
+                    <Button Grid.Row="3"
+                        Margin="10"
+                        Background="ForestGreen"
+                        Click="ButtonAddCombo_Click"
+                        x:Name="ButtonAddCombo" 
+                        Content="Thêm Combo"/>
+                </StackPanel>
+                
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</Page>

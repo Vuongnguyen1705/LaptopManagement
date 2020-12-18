@@ -76,7 +76,7 @@ namespace LaptopManagement.pages
                     {
                         products += bLL_Product.getProductNameByid(int.Parse(i)) + "\n";
                     }
-                    list.Add(new ComboFormat(item.ID, item.Combo_Name, products.Trim(), item.startDate.ToShortDateString(), item.endDate.ToShortDateString(), item.totalMoney, item.discount));
+                    list.Add(new ComboFormat(false, item.ID, item.Combo_Name, products.Trim(), item.startDate.ToShortDateString(), item.endDate.ToShortDateString(), item.totalMoney, item.discount));
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -110,14 +110,14 @@ namespace LaptopManagement.pages
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new AddComboPage(-1));
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             if (listIDCombo.Count != 0)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xóa sản phẩm", MessageBoxButton.OKCancel);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xóa Combo", MessageBoxButton.OKCancel);
                 if (messageBoxResult == MessageBoxResult.OK)
                 {
                     foreach (var id in listIDCombo)
@@ -125,6 +125,7 @@ namespace LaptopManagement.pages
                         bLL_Combo.Delete(id);
                     }
                     _vm.ShowSuccess("Xóa thành công");
+                    SetVisiable();
                 }
             }
             else
@@ -138,14 +139,22 @@ namespace LaptopManagement.pages
             CheckBox check = sender as CheckBox;
             ComboFormat comboFormat = check.DataContext as ComboFormat;
             listIDCombo.Add(comboFormat.ID);
+            comboFormat.isCheck = true;
         }
 
         private void ChecboxDelete_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckBox check = sender as CheckBox;
             ComboFormat comboFormat = check.DataContext as ComboFormat;
+            comboFormat.isCheck = false;
             _vm.ShowError(comboFormat.ID.ToString());
         }
 
+        private void DataGridCombo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ComboFormat comboFormat = (ComboFormat)DataGridCombo.SelectedItem;
+            if (comboFormat != null)
+                NavigationService.Navigate(new AddComboPage(comboFormat.ID));
+        }
     }
 }
