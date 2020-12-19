@@ -275,8 +275,30 @@ namespace LaptopManagement.pages
                 }
                 else
                 {
-                    TextBlockComboNameError.Visibility = Visibility.Collapsed;
-                    flagComboName = true;
+                    bool flag = true;
+                    foreach(var item in bLL_Combo.getAllCombo())
+                    {
+                        if (item.Combo_Name.Equals(TextBoxComboName.Text))
+                        {                           
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag == true)
+                    {
+                        TextBlockComboNameError.Visibility = Visibility.Collapsed;
+                        flagComboName = true;
+                    }
+                    else
+                    {
+                        if (_idCombo == -1)
+                        {
+                            TextBlockComboNameError.Visibility = Visibility.Visible;
+                            TextBlockComboNameError.Text = "Tên combo đã tồn tại";
+                            flagComboName = false;
+                        }
+                    }
+                    
                 }
             }
         }
