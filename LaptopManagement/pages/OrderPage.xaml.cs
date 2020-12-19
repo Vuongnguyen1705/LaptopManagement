@@ -372,6 +372,7 @@ namespace LaptopManagement.pages
                 list.Add(item.ID,item.firstName + " " + item.lastName);
             }
             ComboBoxCustomer.ItemsSource = list.Values;
+            ComboBoxCustomer.SelectedIndex = 1;
         }
         private void ButtonAddOrder_Click(object sender, RoutedEventArgs e)
         {
