@@ -65,7 +65,7 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                
+
                 <StackPanel Grid.Row="1">
                     <Button x:Name="ButtonProduct"
                         Style="{DynamicResource ButtonStyleMenu}" Click="Button_Menu_Click">
@@ -105,7 +105,7 @@
                 </StackPanel>
             </Grid>
             <Frame x:Name="LayoutContent" Grid.Column="1" NavigationUIVisibility="Hidden">
-                
+
             </Frame>
         </Grid>
         <!--<Grid Grid.Row="1">

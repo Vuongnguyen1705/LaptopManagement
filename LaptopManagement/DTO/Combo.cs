@@ -14,7 +14,24 @@ namespace DTO
     
     public partial class Combo
     {
+        public Combo()
+        {
+        }
+
+        public Combo(int iD, string image, string combo_Name, string product_List, DateTime startDate, DateTime endDate, decimal totalMoney, int discount)
+        {
+            ID = iD;
+            Image = image;
+            Combo_Name = combo_Name;
+            Product_List = product_List;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.totalMoney = totalMoney;
+            this.discount = discount;
+        }
+
         public int ID { get; set; }
+        public string Image { get; set; }
         public string Combo_Name { get; set; }
         public string Product_List { get; set; }
         public System.DateTime startDate { get; set; }

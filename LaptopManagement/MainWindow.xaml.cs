@@ -22,9 +22,11 @@ namespace LaptopManagement
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private int _id;
+        public MainWindow(int id)
         {
             InitializeComponent();
+            _id = id;
             LoadContent();
             Application.Current.MainWindow = this;
             LayoutContent.Content = new StatisticPage();
@@ -64,6 +66,10 @@ namespace LaptopManagement
             string lastName = UserSingleTon.Instance.User.lastName;
             string fullName = firstName + " " + lastName;
             TextBlockUserName.Text = fullName;
+            if (_id == 2)
+            {
+                ButtonUser.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void TextBlockUserName_MouseDown(object sender, MouseButtonEventArgs e)

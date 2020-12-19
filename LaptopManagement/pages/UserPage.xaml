@@ -58,9 +58,9 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox
-                                    IsChecked="{Binding isDisable}"
-                                    Checked="ToggleButton_Checked_Active"
-                                    Unchecked="ToggleButton_Unchecked_DeActive"/>
+                                        IsChecked="{Binding isDisable}"
+                                        Checked="ToggleButton_Checked_Active"
+                                        Unchecked="ToggleButton_Unchecked_DeActive"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

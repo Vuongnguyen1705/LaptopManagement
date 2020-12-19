@@ -37,66 +37,75 @@
                     Width="200"                
                     FontSize="15"
                     IsReadOnly="True"
-                    Margin="0 5"
+                    Margin="0 5"  
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                     materialDesign:HintAssist.Hint="Tên đăng nhập"/>
+                <TextBlock Name="TextBlockUserNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center">
                 <TextBox Name="TextBoxFirstName"
-                        Width="200"                
-                        FontSize="15"
-                        Margin="0 5"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                        materialDesign:HintAssist.Hint="Họ"/>
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    TextChanged="TextBoxFirstName_TextChanged"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Họ"/>
+                <TextBlock Name="TextBlockFirstNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" VerticalAlignment="Center">
                 <TextBox Name="TextBoxLastName"
-                        Width="200"                
-                        FontSize="15"
-                        Margin="0 5"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                        materialDesign:HintAssist.Hint="Tên"/>
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    TextChanged="TextBoxLastName_TextChanged"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Tên"/>
+                <TextBlock Name="TextBlockLastNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="3"
                     VerticalAlignment="Center">
                 <DatePicker
-                        HorizontalAlignment="Left"
-                        Name="DatePickerBirthday"
-                        Width="200"
-                        DisplayDateEnd="{x:Static sys:DateTime.Today}"
-                        Text="12/2/2012"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                        materialDesign:HintAssist.Hint="Ngày sinh" />
+                    HorizontalAlignment="Left"
+                    Name="DatePickerBirthday"
+                    Width="200"                    
+                    Focusable="False"
+                    DisplayDateEnd="{x:Static sys:DateTime.Today}"
+                    Text="12/2/2012"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                    materialDesign:HintAssist.Hint="Ngày sinh" />
             </StackPanel>
 
             <StackPanel Grid.Row="4" VerticalAlignment="Center">
                 <TextBox Name="TextBoxAddress"
-                        Width="200"                
-                        FontSize="15"
-                        Margin="0 5"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                        materialDesign:HintAssist.Hint="Địa chỉ"/>
+                    Width="200"                
+                    FontSize="15"
+                    Margin="0 5"
+                    TextChanged="TextBoxAddress_TextChanged"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Địa chỉ"/>
+                <TextBlock Name="TextBlockAddressError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="5"
                     VerticalAlignment="Center">
                 <DatePicker
-                        HorizontalAlignment="Left"
-                        Name="DatePickerJoinDate"
-                        Width="200"
-                        DisplayDateEnd="{x:Static sys:DateTime.Today}"
-                        Text="12/2/2012"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                        materialDesign:HintAssist.Hint="Ngày vào làm" />
+                    HorizontalAlignment="Left"
+                    Name="DatePickerJoinDate"
+                    Width="200"
+                    Focusable="False"
+                    DisplayDateEnd="{x:Static sys:DateTime.Today}"
+                    Text="12/2/2012"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                    materialDesign:HintAssist.Hint="Ngày vào làm" />
             </StackPanel>
         </Grid>
 
@@ -156,17 +165,23 @@
                 <CheckBox
                     Name="CheckBoxChangePass"
                     Margin="0,0,0,8"
+                    Checked="CheckBoxChangePass_Checked"
+                    Unchecked="CheckBoxChangePass_Unchecked"
                     Content="Thay đổi mật khẩu"/>
-                <PasswordBox
-                    Name="PasswordBoxOldPass"
-                    Margin="0 5"                        
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
-                    VerticalAlignment="Top"
-                    Width="200"
-                    PasswordChar="@"
-                    IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxChangePass}"
-                    materialDesign:HintAssist.Hint="Mật khẩu cũ"/>
+                <StackPanel Orientation="Horizontal">
+                    <PasswordBox
+                        Name="PasswordBoxOldPass"
+                        Margin="0 5"     
+                        PasswordChanged="PasswordBoxOldPass_PasswordChanged"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
+                        VerticalAlignment="Top"
+                        Width="200"
+                        IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxChangePass}"
+                        materialDesign:HintAssist.Hint="Mật khẩu cũ"/>
+                    <TextBlock Name="TextBlockOldPassError" VerticalAlignment="Center" Margin="10" Visibility="Collapsed" Foreground="Red"/>
+                </StackPanel>
+                
             </StackPanel>
 
             <StackPanel Grid.Row="4">
@@ -174,28 +189,30 @@
                     Name="PasswordBoxNewPass"
                     IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxChangePass}"
                     Margin="0 5"
+                    PasswordChanged="PasswordBoxNewPass_PasswordChanged"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
                     VerticalAlignment="Top"
                     Width="200"
-                    PasswordChar="@"
                     materialDesign:HintAssist.Hint="Mật khẩu mới"/>
 
                 <PasswordBox
                     Name="PasswordBoxNewPassConfirm"
                     Margin="0 5"
+                    PasswordChanged="PasswordBoxNewPassConfirm_PasswordChanged"
                     IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxChangePass}"                        
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
                     VerticalAlignment="Top"
                     Width="200"
-                    PasswordChar="@"
                     materialDesign:HintAssist.Hint="Xác nhận mật khẩu"/>
+                <TextBlock Name="TextBlockNewPassConfirmError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="5">
                 <Button x:Name="ButtonSave"
-                    Background="Green"
+                    Background="Green"                  
+                    HorizontalAlignment="Left"
                     Click="ButtonSave_Click"
                     Content="Lưu thay đổi"/>
                 <fa:ImageAwesome x:Name="ImageAwesomeLoading" Visibility="Hidden" Icon="Spinner" Margin="5" Spin="True" Height="18" Width="18" />
