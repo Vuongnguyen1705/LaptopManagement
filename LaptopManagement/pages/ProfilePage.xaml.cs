@@ -30,7 +30,7 @@ namespace LaptopManagement.pages
         private BLL_Role bLL_Role = new BLL_Role();
         private bool gender;
         private ToastViewModel _vm;
-        private bool flagFistName = false, flagLastName = false, flagAddress = false, flagConfirmPass = false, flagOldPass = false, flagCheckChangePass=false;
+        private bool flagFistName = false, flagLastName = false, flagAddress = false, flagConfirmPass = false, flagOldPass = false, flagCheckChangePass = false;
         public ProfilePage()
         {
             InitializeComponent();
@@ -55,28 +55,28 @@ namespace LaptopManagement.pages
             {
                 RadioFmale.IsChecked = true;
             }
- 
+
             TextBlockActive.Text = "Đang hoạt động";
             TextBlockActive.Foreground = Brushes.Green;
             ComboBoxRole.Text = bLL_Role.getRoleNameByID(UserSingleTon.Instance.User.Role_ID);
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            
+
             new Thread(() =>
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     ImageAwesomeLoading.Visibility = Visibility.Visible;//hiển thị loading
 
-                    if (flagCheckChangePass==true)
+                    if (flagCheckChangePass == true)
                     {
-                        if (flagConfirmPass == true && flagOldPass==true )
+                        if (flagConfirmPass == true && flagOldPass == true)
                         {
                             if (flagFistName == true && flagLastName == true && flagAddress == true)
                             {
                                 bLL_User.Update(new User(UserSingleTon.Instance.User.ID, UserSingleTon.Instance.User.username, Utils.EncryptString(PasswordBoxNewPass.Password, Utils.passEncode), TextBoxFirstName.Text, TextBoxLastName.Text, gender, DateTime.Parse(DatePickerBirthday.Text), TextBoxAddress.Text, DateTime.Parse(DatePickerJoinDate.Text), bLL_User.getValueByStatus(TextBlockActive.Text), UserSingleTon.Instance.User.Role_ID));
-                                _vm.ShowSuccess("Cập nhật thành công1");
+                                _vm.ShowSuccess("Cập nhật thành công");
                             }
                             else
                             {
@@ -94,17 +94,17 @@ namespace LaptopManagement.pages
                         if (flagFistName == true && flagLastName == true && flagAddress == true)
                         {
                             bLL_User.Update(new User(UserSingleTon.Instance.User.ID, UserSingleTon.Instance.User.username, UserSingleTon.Instance.User.password, TextBoxFirstName.Text, TextBoxLastName.Text, gender, DateTime.Parse(DatePickerBirthday.Text), TextBoxAddress.Text, DateTime.Parse(DatePickerJoinDate.Text), bLL_User.getValueByStatus(TextBlockActive.Text), UserSingleTon.Instance.User.Role_ID));
-                            _vm.ShowSuccess("Cập nhật thành công2 ");
+                            _vm.ShowSuccess("Cập nhật thành công");
                             ImageAwesomeLoading.Visibility = Visibility.Collapsed;
                         }
                         else
                         {
                             _vm.ShowError("Vui lòng nhập đúng các thông tin");
                             ImageAwesomeLoading.Visibility = Visibility.Collapsed;
-                        }                        
+                        }
                     }
                 }), DispatcherPriority.Loaded);
-            }).Start();                 
+            }).Start();
         }
 
         private void RadioMale_Checked(object sender, RoutedEventArgs e)
@@ -129,6 +129,15 @@ namespace LaptopManagement.pages
 
         private void PasswordBoxNewPassConfirm_PasswordChanged(object sender, RoutedEventArgs e)
         {
+            if (PasswordBoxNewPass.Password.Length < 6)
+            {
+                TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
+                TextBlockNewPassConfirmError.Text = "Mật khẩu phải từ 6 ký tự trở lên";
+                TextBlockNewPassConfirmError.Foreground = Brushes.Red;
+                flagConfirmPass = false;
+            }
+            else
+            {
                 if (PasswordBoxNewPassConfirm.Password.Equals(PasswordBoxNewPass.Password))
                 {
                     TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
@@ -142,30 +151,41 @@ namespace LaptopManagement.pages
                     TextBlockNewPassConfirmError.Text = "Mật khẩu không khớp";
                     TextBlockNewPassConfirmError.Foreground = Brushes.Red;
                     flagConfirmPass = false;
-                }            
+                }
+            }
         }
 
         private void PasswordBoxNewPass_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (PasswordBoxOldPass.Password.Equals(PasswordBoxNewPassConfirm.Password))
+            if (PasswordBoxNewPass.Password.Length < 6)
             {
                 TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
-                TextBlockNewPassConfirmError.Text = "✔";
-                TextBlockNewPassConfirmError.Foreground = Brushes.Green;
-                flagConfirmPass = true;
+                TextBlockNewPassConfirmError.Text = "Mật khẩu phải từ 6 ký tự trở lên";
+                TextBlockNewPassConfirmError.Foreground = Brushes.Red;
+                flagConfirmPass = false;
             }
             else
             {
-                TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
-                TextBlockNewPassConfirmError.Text = "Mật khẩu không khớp";
-                TextBlockNewPassConfirmError.Foreground = Brushes.Red;
-                flagConfirmPass = false;
+                if (PasswordBoxOldPass.Password.Equals(PasswordBoxNewPassConfirm.Password))
+                {
+                    TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
+                    TextBlockNewPassConfirmError.Text = "✔";
+                    TextBlockNewPassConfirmError.Foreground = Brushes.Green;
+                    flagConfirmPass = true;
+                }
+                else
+                {
+                    TextBlockNewPassConfirmError.Visibility = Visibility.Visible;
+                    TextBlockNewPassConfirmError.Text = "Mật khẩu không khớp";
+                    TextBlockNewPassConfirmError.Foreground = Brushes.Red;
+                    flagConfirmPass = false;
+                }
             }
         }
 
         private void PasswordBoxOldPass_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (!PasswordBoxOldPass.Password.Equals(Utils.DecryptString(UserSingleTon.Instance.User.password,Utils.passEncode)))
+            if (!PasswordBoxOldPass.Password.Equals(Utils.DecryptString(UserSingleTon.Instance.User.password, Utils.passEncode)))
             {
                 TextBlockOldPassError.Visibility = Visibility.Visible;
                 TextBlockOldPassError.Text = "✘";

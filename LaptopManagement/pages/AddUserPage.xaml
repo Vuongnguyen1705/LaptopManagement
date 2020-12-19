@@ -39,6 +39,7 @@
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                     materialDesign:HintAssist.Hint="Tên đăng nhập" TextChanged="TextBoxUserName_TextChanged"/>
+                <TextBlock Name="TextBlockUserNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" VerticalAlignment="Center">
@@ -46,10 +47,12 @@
                         Width="200"                
                         FontSize="15"
                         Margin="0 5"
+                         TextChanged="TextBoxFirstName_TextChanged"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
                         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                         materialDesign:HintAssist.Hint="Họ"/>
+                <TextBlock Name="TextBlockFirstNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" VerticalAlignment="Center">
@@ -57,10 +60,12 @@
                         Width="200"                
                         FontSize="15"
                         Margin="0 5"
+                        TextChanged="TextBoxLastName_TextChanged"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
                         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                         materialDesign:HintAssist.Hint="Tên"/>
+                <TextBlock Name="TextBlockLastNameError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="3"
@@ -69,6 +74,7 @@
                         HorizontalAlignment="Left"
                         Name="DatePickerBirthday"
                         Width="200"
+                        Focusable="False"
                         DisplayDateEnd="{x:Static sys:DateTime.Today}"
                         Text="12/2/2012"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}"
@@ -80,9 +86,11 @@
                         Width="200"                
                         FontSize="15"
                         Margin="0 5"
+                         TextChanged="TextBoxAddress_TextChanged"
                         HorizontalAlignment="Left"
                         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                         materialDesign:HintAssist.Hint="Địa chỉ"/>
+                <TextBlock Name="TextBlockAddressError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
 
             <StackPanel Grid.Row="5"
@@ -91,6 +99,7 @@
                         HorizontalAlignment="Left"
                         Name="DatePickerJoinDate"
                         Width="200"
+                        Focusable="False"
                         DisplayDateEnd="{x:Static sys:DateTime.Today}"
                         Text="12/2/2012"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}"
@@ -135,6 +144,7 @@
                 <PasswordBox
                     Name="PasswordBox"                      
                     Margin="0 5"
+                    PasswordChanged="PasswordBox_PasswordChanged"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
                     VerticalAlignment="Top"
@@ -142,6 +152,7 @@
                     PasswordChar="@"
                     materialDesign:HintAssist.Hint="Mật khẩu"/>
                 <PasswordBox
+                    PasswordChanged="PasswordBoxConfirm_PasswordChanged"
                     Name="PasswordBoxConfirm"
                     Margin="0 5"                        
                     HorizontalAlignment="Left"
@@ -150,6 +161,7 @@
                     Width="200"
                     PasswordChar="@"
                     materialDesign:HintAssist.Hint="Xác nhận mật khẩu"/>
+                <TextBlock Name="TextBlockNewPassConfirmError" Visibility="Collapsed" Foreground="Red"/>
             </StackPanel>
             
             <StackPanel Grid.Row="4">
