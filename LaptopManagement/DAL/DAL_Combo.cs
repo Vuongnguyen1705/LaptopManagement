@@ -28,5 +28,17 @@ namespace DAL
             db.Comboes.Remove(combo);
             db.SaveChanges();
         }
+        public string getComboNameByID(int id)
+        {
+            return db.Comboes.Where(x => x.ID == id).Select(x => x.Combo_Name).SingleOrDefault();
+        }
+        public int getComboIDByName(string Combo_Name)
+        {
+            return db.Comboes.Where(x => x.Combo_Name == Combo_Name).Select(x => x.ID).SingleOrDefault();
+        }
+        public decimal getComboPriceByName(string Combo_Name)
+        {
+            return db.Comboes.Where(x => x.Combo_Name == Combo_Name).Select(x => (x.totalMoney - (x.totalMoney*x.discount/100))).SingleOrDefault();
+        }
     }
 }

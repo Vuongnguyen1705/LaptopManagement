@@ -54,6 +54,8 @@
     <Compile Include="BLL_Catalog.cs" />
     <Compile Include="BLL_Brand.cs" />
     <Compile Include="BLL_Combo.cs" />
+    <Compile Include="BLL_OrderDetail.cs" />
+    <Compile Include="BLL_Order.cs" />
     <Compile Include="BLL_Role.cs" />
     <Compile Include="BLL_Product.cs" />
     <Compile Include="BLL_User.cs" />

@@ -66,5 +66,13 @@ namespace DAL
         {
             return db.Products.Where(x => x.ID == id).Select(x => x.Product_Name).SingleOrDefault();
         }
+        public int getProductIDByName(string Product_Name)  
+        {
+            return db.Products.Where(x => x.Product_Name == Product_Name).Select(x => x.ID).SingleOrDefault();
+        }
+        public decimal getProductPriceByName(string Product_Name)
+        {
+            return db.Products.Where(x => x.Product_Name == Product_Name).Select(x => x.Price).SingleOrDefault();
+        }
     }
 }

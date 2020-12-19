@@ -17,8 +17,12 @@ namespace DAL
         }
         public User getUserByUsername(string username)
         {
-            return db.Users.Where(x => x.username == username).SingleOrDefault();
-           
+            return db.Users.Where(x => x.username == username).SingleOrDefault();          
+        }
+
+        public User getUserByID(int id)
+        {
+            return db.Users.Where(x => x.ID == id).SingleOrDefault();
         }
 
         public ObservableCollection<User> getAllUser()
@@ -124,6 +128,7 @@ namespace DAL
             }
             return false;
         }
+ 
         public void AddUser(User user)
         {            
             User temp = new User();

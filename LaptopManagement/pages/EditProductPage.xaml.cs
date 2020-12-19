@@ -109,6 +109,7 @@ namespace LaptopManagement.pages
                     bLL_Product.UpdateProduct(new Product( id, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()),Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
                     noti.ShowSuccess("Chỉnh sửa sản phẩm thành công.");
                 }
+                
             }
             //MessageBox.Show("/images/Products/"+System.IO.Path.GetFileName(ImageBox.Source.ToString()));
             //MessageBox.Show((ComboBoxCatalog.SelectedItem).ToString());            

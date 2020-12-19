@@ -45,7 +45,7 @@ namespace LaptopManagement
                     LayoutContent.Content = new ComboPage();
                     break;
                 case "ButtonSell":
-                    LayoutContent.Content = new SellPage();
+                    LayoutContent.Content = new OrderPage();
                     break;
                 case "ButtonStatistic":
                     LayoutContent.Content = new StatisticPage();

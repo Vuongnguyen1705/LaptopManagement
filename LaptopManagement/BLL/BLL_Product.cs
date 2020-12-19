@@ -42,6 +42,14 @@ namespace BLL
             return dAL_Product.getProductNameByid(id);
         }
 
+        public int getProductIDByName(string productname)
+        {
+            return dAL_Product.getProductIDByName(productname);
+        }
 
+        public decimal getProductPriceByName(string productname)
+        {
+            return dAL_Product.getProductPriceByName(productname);
+        }
     }
 }

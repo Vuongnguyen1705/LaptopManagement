@@ -14,6 +14,19 @@ namespace DTO
     
     public partial class Order
     {
+        public Order()
+        {
+        }
+
+        public Order(int iD, DateTime Date, double Total_Price, int Customer_Id, int Status)
+        {
+            ID = iD;
+            this.Date = Date;
+            this.Total_Price = Total_Price;
+            this.Customer_Id = Customer_Id;
+            this.Status = Status;
+        }
+
         public int ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<double> Total_Price { get; set; }
