@@ -17,6 +17,11 @@ namespace BLL
             return dAL_User.getUserByUsername(username);
         }
 
+        public User getUserByID(int id)
+        {
+            return dAL_User.getUserByID(id);
+        }
+
         public ObservableCollection<User> getAllUser()
         {
             return dAL_User.getAllUser();

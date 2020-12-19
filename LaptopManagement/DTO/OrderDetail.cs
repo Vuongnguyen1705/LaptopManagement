@@ -14,6 +14,20 @@ namespace DTO
     
     public partial class OrderDetail
     {
+        public OrderDetail()
+        {
+
+        }
+        public OrderDetail(int iD, int? order_Id, int? product_Id, int? combo_Id, int? quantity, double? price)
+        {
+            ID = iD;
+            Order_Id = order_Id;
+            Product_Id = product_Id;
+            Combo_Id = combo_Id;
+            Quantity = quantity;
+            Price = price;
+        }
+
         public int ID { get; set; }
         public Nullable<int> Order_Id { get; set; }
         public Nullable<int> Product_Id { get; set; }

@@ -98,8 +98,6 @@ namespace LaptopManagement.pages
             else
             {
                 noti.ShowError("Vui lòng nhập đầy đủ thông tin");
-
-
             }
             //MessageBox.Show("/images/Products/"+System.IO.Path.GetFileName(ImageBox.Source.ToString()));
             //MessageBox.Show((ComboBoxCatalog.SelectedItem).ToString());            

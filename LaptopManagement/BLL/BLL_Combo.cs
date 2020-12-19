@@ -31,7 +31,7 @@ namespace BLL
         {
             dAL_Combo.AddCombo(combo);
         }
-
+      
         public string getComboNameByID(int id)
         {
             return dAL_Combo.getComboNameByID(id);
@@ -45,6 +45,14 @@ namespace BLL
         public void Update(Combo combo)
         {
             dAL_Combo.Update(combo);
+        }
+        public int getComboIDByName(string comboname)
+        {
+            return dAL_Combo.getComboIDByName(comboname);
+        }
+        public decimal getComboPriceByName(string comboname)
+        {
+            return dAL_Combo.getComboPriceByName(comboname);
         }
     }
 }

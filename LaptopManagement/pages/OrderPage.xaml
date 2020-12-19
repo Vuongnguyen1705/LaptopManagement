@@ -1,0 +1,230 @@
+﻿<Page x:Class="LaptopManagement.pages.OrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LaptopManagement.pages"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="OrderPage">
+
+    <Grid>
+        <Grid x:Name="GridRoot" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left">
+                    <TextBox x:Name="TextBoxSearch"                         
+                    Width="240" 
+                    Height="35"
+                    Margin="5 0 0 0"
+                    materialDesign:HintAssist.Hint="🔍 Tìm Kiếm"
+                    TextChanged="TextBoxSearch_TextChanged"/>
+                    <ComboBox                 
+                    HorizontalAlignment="Left"
+                    Width="150"
+                    Margin="45 0 0 4"
+                    Name="ComboBoxCustomer"   
+                    IsEditable="False"
+                    materialDesign:HintAssist.Hint="Khách hàng"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" SelectionChanged="ComboBoxCustomer_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button x:Name="ButtonAddOrder" Content="Thêm đơn hàng" HorizontalAlignment="Right" Margin="5" Click="ButtonAddOrder_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <Button x:Name="ButtonDeleteOrderDetail" IsEnabled="False"  Margin="0 0 5 0" Background="Red" Content="Đặt lại chi tiết" HorizontalAlignment="Right" Click="ButtonDeleteOrderDetail_Click"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid>
+                        <DataGrid x:Name="DataGridOrder"
+                            MouseDown="DataGridOrder_MouseDown"
+                            Margin="0 8 5 0"
+                            Background="#F0F0F0"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2 "
+                                  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding ID}"
+                                    Header="Mã đặt hàng"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" />
+                                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Date}"
+                                    Header="Ngày đặt hàng"
+                                    MaxLength="100"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <!-- set a max length to get an indicator in the editor -->
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Total_Price}"
+                                    Header="Tổng tiền"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Customer_Name}"
+                                    IsReadOnly="True"
+                                    Header="Khách hàng"/>
+                                <DataGridTemplateColumn Header="Trạng thái">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox Name="ComboBoxStatus" Text="{Binding Status}" DropDownClosed="ComboBoxStatus_DropDownClosed">
+                                                <ComboBoxItem Content="Đã tiếp nhận"/>
+                                                <ComboBoxItem Content="Đang xử lý"/>
+                                                <ComboBoxItem Content="Đã hoàn thành"/>
+                                                <ComboBoxItem Content="Đã hủy"/>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+
+
+                            </DataGrid.Columns>
+                            
+                        </DataGrid>
+                        <fa:ImageAwesome x:Name="ImageAwesomeLoading" Visibility="Collapsed" Icon="Spinner" Spin="True" Height="64" Width="64" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1" Margin="5 0 0 0" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <DataGrid x:Name="DataGridOrderDetail" Background="#f0f0f0"
+                            MouseDown="DataGridOrder_MouseDown"
+                            Margin="0 8 0 0"                
+                            IsReadOnly="True"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding OD_Name}"
+                                    Header="Tên sản phẩm"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" />
+                                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding OD_Type}"
+                                    Header="Loại"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding OD_TotalMoney}"
+                                    Header="Thành tiền"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding OD_Quantity}"
+                                    Header="Số lượng"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <DockPanel 
+                            Grid.Row="0">
+                            <TextBox x:Name="TextBoxSearchProduct" 
+                                VerticalAlignment="Center"
+                                IsEnabled="false"
+                                Margin="5 0 5 0"
+                                Width="140" DockPanel.Dock="Left"
+                                TextChanged="TextBoxSearchProduct_TextChanged"
+                                materialDesign:HintAssist.Hint="Tìm kiếm"/>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" FlowDirection="LeftToRight">
+                                <TextBox Name="TextBoxQuantity"                
+                                    Width="50" 
+                                    IsEnabled="False"
+                                    PreviewTextInput="NumberValidation"
+                                    FontSize="14"   
+                                    MaxLength="4"
+                                    Margin="5 14 5 14"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                    materialDesign:HintAssist.Hint="SL"/>
+                                <Button x:Name="ButtonAddOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0"  Content="➕" HorizontalAlignment="Right" Click="ButtonAdd_Click"/>
+                                <Button x:Name="ButtonDeleteSelectedOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0" Background="Red" Content="🗑️" HorizontalAlignment="Right" Click="ButtonDeleteSelectedOrderDetail_Click"/>
+                                <Button x:Name="ButtonSaveOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0" Background="Green" Content="💾" HorizontalAlignment="Right" Click="ButtonSaveOrderDetail_Click"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <DataGrid x:Name="DataGridProductSelection"
+                                MouseDown="DataGridProductSelection_MouseDown"
+                                Margin="0 8 0 0"     
+                                Background="#f0f0f0"
+                                IsReadOnly="True"
+                                IsEnabled="False"
+                                CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding Name}"
+                                    Header="Tên sản phẩm"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" />
+                                <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Type}"
+                                    Header="Loại"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Price}"
+                                    Header="Giá tiền"
+                                    IsReadOnly="True"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+
+
+</Page>
+
+

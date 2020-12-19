@@ -65,6 +65,9 @@
     <Compile Include="Combo.cs">
       <DependentUpon>Laptop.tt</DependentUpon>
     </Compile>
+    <Compile Include="format\OrderDetailFormat.cs" />
+    <Compile Include="format\OrderFormat.cs" />
+    <Compile Include="format\ProductSelectionFormat.cs" />
     <Compile Include="format\ProductFormat.cs" />
     <Compile Include="format\ComboFormat.cs" />
     <Compile Include="format\UserFormat.cs" />
