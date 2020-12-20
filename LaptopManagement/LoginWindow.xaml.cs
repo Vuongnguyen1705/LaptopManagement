@@ -24,8 +24,7 @@ namespace LaptopManagement
     {
         private BLL_Login bLL_Login = new BLL_Login();
         private BLL_User bLL_Employee = new BLL_User();
-        private ToastViewModel _vm;
-
+        private ToastViewModel _vm;        
         public LoginWindow()
         {
             InitializeComponent();
@@ -35,6 +34,7 @@ namespace LaptopManagement
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
+            ButtonLogin.IsEnabled = false;
             string username = TextBoxUserName.Text;
             string password = PasswordBoxPassword.Password;
             new Thread(() =>
@@ -55,6 +55,7 @@ namespace LaptopManagement
                         case -1:
                             TextBlockError.Visibility = Visibility.Visible;
                             _vm.ShowError("Tài khoản của bạn bị khóa! Vui lòng liên hệ admin");
+                            ButtonLogin.IsEnabled = true;
                             break;
                         case 1:
                             UserSingleTon.Instance.User = bLL_Employee.getUserByUsername(username);
@@ -69,10 +70,12 @@ namespace LaptopManagement
                         case 3:
                             TextBlockError.Visibility = Visibility.Visible;
                             TextBlockError.Text = "Bạn không đủ quyền đăng nhập ";
+                            ButtonLogin.IsEnabled = true;
                             break;
                         default:
                             TextBlockError.Visibility = Visibility.Visible;
                             TextBlockError.Text = "Sai thông tin đăng nhập!";
+                            ButtonLogin.IsEnabled = true;
                             break;
                     }                    
                     ImageAwesomeLoading.Visibility = Visibility.Collapsed;

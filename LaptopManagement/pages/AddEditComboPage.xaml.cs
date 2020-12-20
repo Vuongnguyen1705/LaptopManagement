@@ -2,6 +2,7 @@
 using DTO;
 using DTO.format;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,8 @@ namespace LaptopManagement.pages
         private int _idCombo;
         private string productid;
         private bool flagComboName = true, flagDiscount = true, flagTotalMoney = true;
+        string filePath;
+        private string destinationDir;
         public AddComboPage(int idCombo)
         {
             InitializeComponent();
@@ -44,6 +47,7 @@ namespace LaptopManagement.pages
             bLL_Product = new BLL_Product();
             bLL_Combo = new BLL_Combo();
             _vm = new ToastViewModel();
+            //ImageCombo.Source = new BitmapImage(new Uri("pack://application:,,,/LaptopManagement;component/LaptopShop/LaptopShop/Assets/Layout2/images/Headphone/EH469RGB.png", UriKind.RelativeOrAbsolute));
             SetVisiable();
             SetInfo();
         }
@@ -154,7 +158,8 @@ namespace LaptopManagement.pages
                     }
                     else
                     {
-                        bLL_Combo.AddCombo(new Combo(0,"", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
+                        System.IO.File.Copy(filePath, destinationDir + System.IO.Path.GetFileName(filePath), true);
+                        bLL_Combo.AddCombo(new Combo(0, "images/Combo/" + System.IO.Path.GetFileName(filePath), TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
                         _vm.ShowSuccess("Thêm Combo thành công");
                     }
                 }
@@ -181,7 +186,8 @@ namespace LaptopManagement.pages
                     }
                     else
                     {
-                        bLL_Combo.Update(new Combo(_idCombo,"", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
+                        System.IO.File.Copy(filePath, destinationDir + System.IO.Path.GetFileName(filePath), true);
+                        bLL_Combo.Update(new Combo(_idCombo,"images/Combo/"+ System.IO.Path.GetFileName(filePath), TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
                         _vm.ShowSuccess("Cập nhật thành công");
                     }
                 }
@@ -343,7 +349,16 @@ namespace LaptopManagement.pages
 
         private void ImageCombo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Uri fileUri = new Uri(openFileDialog.FileName);
+                ImageCombo.Source = new BitmapImage(fileUri);
+                filePath = fileUri.ToString().Remove(0, 8);
+                MessageBox.Show(filePath);
+                destinationDir = "../../../../LaptopShop/LaptopShop/Assets/Layout2/images/Combo/";                
+                MessageBox.Show(destinationDir + System.IO.Path.GetFileName(filePath));
+            }
         }
     }
 }

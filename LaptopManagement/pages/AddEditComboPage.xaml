@@ -104,6 +104,7 @@
                     Height="150"
                     Margin="0 5"
                     Stretch="Fill"
+                    Cursor="Hand"
                     Source="/images/upload.png"
                     MouseDown="ImageCombo_MouseDown"
                     HorizontalAlignment="Left"                   

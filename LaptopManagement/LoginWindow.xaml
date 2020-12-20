@@ -78,7 +78,7 @@
                     <StackPanel Grid.Row="4">
                         <fa:ImageAwesome x:Name="ImageAwesomeLoading" Visibility="Collapsed" Icon="Spinner" Margin="5" Spin="True" Height="18" Width="18" />
                         <TextBlock x:Name="TextBlockError" Visibility="Hidden" Margin="5" Foreground="Red" HorizontalAlignment="Center" Height="18"/>
-                        <Button 
+                        <Button  Name="ButtonLogin"
                             Background="#13A2F0"
                             BorderThickness="0"
                             Width="200" 

@@ -27,8 +27,10 @@ namespace LaptopManagement.pages
         private BLL_Catalog bLL_Catalog = new BLL_Catalog();
         private BLL_Brand bLL_Brand = new BLL_Brand();
         private BLL_Product bLL_Product = new BLL_Product();
-        ToastViewModel noti = new ToastViewModel();
+        private ToastViewModel noti = new ToastViewModel();
         private bool flagProductName = false, flagDetail = false, flagAmount = false, flagDiscount = false, flagPrice = false;
+        private string filePath;
+        private string destinationDir;
         public AddProductPage()
         {
 
@@ -56,9 +58,8 @@ namespace LaptopManagement.pages
 
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 ImageBox.Source = new BitmapImage(fileUri);
-                string filePath = fileUri.ToString().Remove(0, 8);
-                string destinationDir = "..\\..\\images\\Products\\";
-                System.IO.File.Copy(filePath, destinationDir + System.IO.Path.GetFileName(filePath), true);
+                filePath = fileUri.ToString().Remove(0, 8);
+                destinationDir = "../../../../LaptopShop/LaptopShop/Assets/Layout2/images/";
             }
         }
 
@@ -78,7 +79,41 @@ namespace LaptopManagement.pages
             //MessageBox.Show("name: " + flagProductName + " price: " + flagPrice + " discount: " + flagDiscount + " detail:" + flagDetail);
             if (flagAmount==true && flagDetail==true && flagDiscount==true && flagPrice==true && flagProductName==true)
             {
-                bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), "/images/Products/" + System.IO.Path.GetFileName(ImageBox.Source.ToString()), Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
+                string folder = "";               
+                switch (ComboBoxCatalog.SelectedIndex)
+                {
+                    case 1:
+                        folder = "PC/";
+                        break;
+                    case 2:
+                        folder = "Bàn Phím/";
+                        break;
+                    case 3:
+                        folder = "Chuột/";
+                        break;
+                    case 4:
+                        folder = "Tai nghe/";
+                        break;
+                    case 5:
+                        folder = "Loa/";
+                        break;
+                    case 6:
+                        folder = "Laptop/";
+                        break;
+                }
+                string linkImage = "";
+                if (destinationDir == null)
+                {
+                    linkImage = "";
+                }
+                else
+                {
+                    linkImage = "/images/" + folder + System.IO.Path.GetFileName(filePath);
+                    System.IO.File.Copy(filePath, destinationDir + folder + System.IO.Path.GetFileName(filePath), true);
+
+                }
+
+                bLL_Product.AddProduct(new Product(1, TextBoxProductName.Text, ComboBoxCatalog.SelectedIndex + 1, Convert.ToInt32(TextBoxAmount.Text), Convert.ToDecimal(TextBoxPrice.Text), linkImage, Convert.ToInt32(TextBoxDiscount.Text), TextAreaDetail.Text, ComboBoxBrand.SelectedIndex + 1));
                 noti.ShowSuccess("Thêm sản phẩm thành công.");
             }
             else
