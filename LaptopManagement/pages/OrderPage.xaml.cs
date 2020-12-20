@@ -38,6 +38,10 @@ namespace LaptopManagement.pages
         ToastViewModel noti = new ToastViewModel();
         private double sumTotalMoney = 0;
         Dictionary<int, string> list = new Dictionary<int, string>();
+        int odid;
+        DateTime oddate;
+        string odstatus;
+
         public OrderPage()
         {
 
@@ -80,7 +84,7 @@ namespace LaptopManagement.pages
                 ObservableCollection<OrderFormat> list = new ObservableCollection<OrderFormat>();
                 foreach (var item in bLL_Order.getAllOrder())
                 {
-                    var user = bLL_User.getUserByID((int)item.Customer_Id);
+                    var user = bLL_User.getUserByID((int)item.User_Id);
                     var nameuser = user.firstName + " " + user.lastName;
                     switch (item.Status)
                     {
@@ -145,17 +149,44 @@ namespace LaptopManagement.pages
             DataGridProductSelection.ItemsSource = listProductSelection;
         }
 
-        public void ShowOrderDetail()
+        public void ShowOrderDetailByID(int order_id)
         {
-            DataGridProductSelection.ItemsSource = listSelected;
+            listSelected.Clear();
+            ObservableCollection<OrderDetail> OD = bLL_OrderDetail.getAllODByOrderID(order_id);
+            foreach (var item in OD)
+            {
+                if (item.Product_Id == null)
+                {
+                    if (item.Price != null)
+                        listSelected.Add(new OrderDetailFormat(item.ID, order_id, bLL_Combo.getComboNameByID((int)item.Combo_Id), "Combo", (double)(item.Price * item.Quantity), (int)item.Quantity)); //làm hàm get comboname
+                }
+                else
+                {
+                    if (item.Price != null)
+                        listSelected.Add(new OrderDetailFormat(item.ID, order_id, bLL_Product.getProductNameByid((int)item.Product_Id), "Sản phẩm", (double)(item.Price * item.Quantity), (int)item.Quantity));
+                }
+            }
+            DataGridOrderDetail.ItemsSource = listSelected;
         }
 
-
-
-
+        private void ButtonDeleteSelectedOrderDetail_Click(object sender, RoutedEventArgs e)
+        {
+            Button bt = sender as Button;
+            OrderDetailFormat detailFormat = bt.DataContext as OrderDetailFormat;
+            if (detailFormat == null)
+            {
+                noti.ShowError("Vui lòng chọn sản phẩm để xóa");
+            }
+            else 
+            { 
+                bLL_OrderDetail.deleteOrderDetailByID(detailFormat.ID);
+                ShowOrderDetailByID(detailFormat.OD_ID);
+            }
+        }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
+            
             if (TextBoxQuantity.Text == "")
             {
                 noti.ShowError("Vui lòng nhập số lượng.");
@@ -168,9 +199,48 @@ namespace LaptopManagement.pages
                 }
                 else
                 {
-                    listSelected.Add(new OrderDetailFormat(formatSelection.ID, formatSelection.Name, formatSelection.Type, formatSelection.Price * Convert.ToInt32(TextBoxQuantity.Text), Convert.ToInt32(TextBoxQuantity.Text)));
+                    OrderFormat order = DataGridOrder.SelectedItem as OrderFormat;
+                    if (order != null) 
+                    { 
+                        odid = order.ID;
+                        oddate = order.Date;
+                        odstatus = order.Status;
+                    }
+                    listSelected.Add(new OrderDetailFormat(formatSelection.ID, odid, formatSelection.Name, formatSelection.Type, formatSelection.Price * Convert.ToInt32(TextBoxQuantity.Text), Convert.ToInt32(TextBoxQuantity.Text)));
                     DataGridOrderDetail.ItemsSource = listSelected;
                     //CollectionViewSource.GetDefaultView(DataGridOrderDetail.ItemsSource).Refresh();           
+                    
+                    if (formatSelection.Type == "Sản phẩm")
+                    {
+                        //MessageBox.Show(item.OD_TotalMoney + "");
+                        bLL_OrderDetail.AddOrderDetail(new OrderDetail(1000, odid, bLL_Product.getProductIDByName(formatSelection.Name), null, Convert.ToInt32(TextBoxQuantity.Text), formatSelection.Price * Convert.ToInt32(TextBoxQuantity.Text)));
+                    }
+                    else
+                    {
+                        bLL_OrderDetail.AddOrderDetail(new OrderDetail(1000, odid, null, bLL_Combo.getComboIDByName(formatSelection.Name), Convert.ToInt32(TextBoxQuantity.Text), formatSelection.Price * Convert.ToInt32(TextBoxQuantity.Text)));
+                    }
+                    foreach (var item in listSelected)
+                    {
+                        sumTotalMoney += item.OD_TotalMoney;
+                    }
+                    int statusInt = 0;
+                    switch (odstatus)
+                    {
+                        case "Đã tiếp nhận":
+                            statusInt = 1;
+                            break;
+                        case "Đang xử lý":
+                            statusInt = 2;
+                            break;
+                        case "Đã hoàn thành":
+                            statusInt = 3;
+                            break;
+                        case "Đã hủy":
+                            statusInt = 4;
+                            break;
+                    }
+                    bLL_Order.UpdateOrder(new Order(odid, oddate, sumTotalMoney, 1, statusInt));
+                    ShowOrder();
                 }
             }
         }
@@ -183,12 +253,6 @@ namespace LaptopManagement.pages
             formatSelection = format;
             //MessageBox.Show(format.Name + "--" + formatSelection.Name);
         }
-
-
-
-
-
-        
 
         private void DataGridOrder_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -203,20 +267,20 @@ namespace LaptopManagement.pages
                     TextBoxQuantity.IsEnabled = false;
                     TextBoxSearchProduct.IsEnabled = false;
                     ButtonAddOrderDetail.IsEnabled = false;
-                    ButtonSaveOrderDetail.IsEnabled = false;
                     ButtonDeleteOrderDetail.IsEnabled = false;
                     DataGridProductSelection.IsEnabled = false;
+         
                     foreach (var item in OD)
                     {
-                        if (item.Product_Id == 0)
+                        if (item.Product_Id == null)
                         {
                             if (item.Price != null)
-                                listSelected.Add(new OrderDetailFormat(1, bLL_Combo.getComboNameByID((int)item.Combo_Id), "Combo", (double)(item.Price * item.Quantity), (int)item.Quantity)); //làm hàm get comboname
+                                listSelected.Add(new OrderDetailFormat(item.ID,order.ID, bLL_Combo.getComboNameByID((int)item.Combo_Id), "Combo", (double)(item.Price * item.Quantity), (int)item.Quantity)); //làm hàm get comboname
                         }
                         else
                         {
                             if (item.Price != null)
-                                listSelected.Add(new OrderDetailFormat(1, bLL_Product.getProductNameByid((int)item.Product_Id), "Sản phẩm", (double)(item.Price * item.Quantity), (int)item.Quantity));
+                                listSelected.Add(new OrderDetailFormat(item.ID, order.ID, bLL_Product.getProductNameByid((int)item.Product_Id), "Sản phẩm", (double)(item.Price * item.Quantity), (int)item.Quantity));
                         }
                     }
                     DataGridOrderDetail.ItemsSource = listSelected;
@@ -225,21 +289,21 @@ namespace LaptopManagement.pages
                 {
                     TextBoxQuantity.IsEnabled = true;
                     TextBoxSearchProduct.IsEnabled = true;
-                    ButtonAddOrderDetail.IsEnabled = true;
-                    ButtonSaveOrderDetail.IsEnabled = true;
+                    ButtonAddOrderDetail.IsEnabled = true;                    
                     ButtonDeleteOrderDetail.IsEnabled = true;
                     DataGridProductSelection.IsEnabled = true;
+             
                     foreach (var item in OD)
                     {
-                        if (item.Product_Id == 0)
+                        if (item.Product_Id == null)
                         {
                             if (item.Price != null)
-                                listSelected.Add(new OrderDetailFormat(1, bLL_Combo.getComboNameByID((int)item.Combo_Id), "Combo", (double)(item.Price * item.Quantity), (int)item.Quantity)); //làm hàm get comboname
+                                listSelected.Add(new OrderDetailFormat(item.ID,order.ID, bLL_Combo.getComboNameByID((int)item.Combo_Id), "Combo", (double)(item.Price * item.Quantity), (int)item.Quantity)); //làm hàm get comboname
                         }
                         else
                         {
                             if (item.Price != null)
-                                listSelected.Add(new OrderDetailFormat(1, bLL_Product.getProductNameByid((int)item.Product_Id), "Sản phẩm", (double)(item.Price * item.Quantity), (int)item.Quantity));
+                                listSelected.Add(new OrderDetailFormat(item.ID,order.ID, bLL_Product.getProductNameByid((int)item.Product_Id), "Sản phẩm", (double)(item.Price * item.Quantity), (int)item.Quantity));
                         }
                     }
                     DataGridOrderDetail.ItemsSource = listSelected;
@@ -261,44 +325,7 @@ namespace LaptopManagement.pages
 
         private void ButtonSaveOrderDetail_Click(object sender, RoutedEventArgs e)
         {
-            OrderFormat order = DataGridOrder.SelectedItem as OrderFormat;
-
-            foreach (var item in listSelected)
-            {
-                if (item.OD_Type == "Sản phẩm")
-                {
-                    //MessageBox.Show(item.OD_TotalMoney + "");
-                    bLL_OrderDetail.AddOrderDetail(new OrderDetail(1, order.ID, bLL_Product.getProductIDByName(item.OD_Name), 0, item.OD_Quantity, item.OD_TotalMoney));
-
-                }
-                else
-                {
-                    bLL_OrderDetail.AddOrderDetail(new OrderDetail(1, order.ID, 0, bLL_Combo.getComboIDByName(item.OD_Name), item.OD_Quantity, item.OD_TotalMoney));
-                }
-            }
-
-            foreach (var item in listSelected)
-            {
-                sumTotalMoney += item.OD_TotalMoney;
-            }
-            int statusInt = 0;
-            switch (order.Status)
-            {
-                case "Đã tiếp nhận":
-                    statusInt = 1;
-                    break;
-                case "Đang xử lý":
-                    statusInt = 2;
-                    break;
-                case "Đã hoàn thành":
-                    statusInt = 3;
-                    break;
-                case "Đã hủy":
-                    statusInt = 4;
-                    break;
-            }
-            bLL_Order.UpdateOrder(new Order(order.ID, order.Date, sumTotalMoney, 1, statusInt));
-            ShowOrder();
+            
         }
 
         private void ButtonDeleteOrderDetail_Click(object sender, RoutedEventArgs e)
@@ -306,6 +333,11 @@ namespace LaptopManagement.pages
             MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắc chắn muốn xóa tất cả?", "Xóa sản phẩm", MessageBoxButton.OKCancel);
             if (messageBoxResult == MessageBoxResult.OK)
             {
+                
+                foreach (var item in listSelected)
+                {
+                    bLL_OrderDetail.deleteOrderDetailByID(item.ID);
+                }
                 listSelected.Clear();
                 DataGridOrderDetail.ItemsSource = null;
             }
@@ -359,11 +391,7 @@ namespace LaptopManagement.pages
             CollectionViewSource.GetDefaultView(DataGridProductSelection.ItemsSource).Refresh();
         }
 
-        private void ButtonDeleteSelectedOrderDetail_Click(object sender, RoutedEventArgs e)
-        {
-            /*foreach (var item in listSelected)
-            listSelected.Remove();*/
-        }
+        
         private void ShowCustomerName()
         {
           
@@ -394,9 +422,12 @@ namespace LaptopManagement.pages
         {
 
         }
+
+        private void DataGridOrderDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
-/*Error list:
- * Chưa làm được user nên set cứng là 1*/
 

@@ -18,7 +18,7 @@ namespace DTO
         {
         }
 
-        public Product(int iD, string product_Name, int catalog_ID, int amount, decimal price, string image, int? discount, string detail, int? brand_ID)
+        public Product(int iD, string product_Name, int catalog_ID, int amount, decimal price, string image, double? discount, string detail, int? brand_ID)
         {
             ID = iD;
             Product_Name = product_Name;
@@ -37,7 +37,7 @@ namespace DTO
         public int Amount { get; set; }
         public decimal Price { get; set; }
         public string Image { get; set; }
-        public Nullable<int> Discount { get; set; }
+        public Nullable<double> Discount { get; set; }
         public string Detail { get; set; }
         public Nullable<int> Brand_ID { get; set; }
     }

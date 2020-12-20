@@ -18,7 +18,7 @@ namespace DTO
         {
         }
 
-        public Combo(int iD, string image, string combo_Name, string product_List, DateTime startDate, DateTime endDate, decimal totalMoney, int discount)
+        public Combo(int iD, string image, string combo_Name, string product_List, DateTime startDate, DateTime endDate, double totalMoney, int discount)
         {
             ID = iD;
             Image = image;
@@ -36,7 +36,7 @@ namespace DTO
         public string Product_List { get; set; }
         public System.DateTime startDate { get; set; }
         public System.DateTime endDate { get; set; }
-        public decimal totalMoney { get; set; }
+        public double totalMoney { get; set; }
         public int discount { get; set; }
     }
 }

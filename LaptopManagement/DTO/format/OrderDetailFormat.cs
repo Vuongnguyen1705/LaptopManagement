@@ -8,9 +8,12 @@ namespace DTO.format
 {
     public class OrderDetailFormat
     {
-        public OrderDetailFormat(int iD, string oD_Name, string oD_Type, double oD_TotalMoney, int oD_Quantity)
+
+
+        public OrderDetailFormat(int iD, int oD_ID, string oD_Name, string oD_Type, double oD_TotalMoney, int oD_Quantity)
         {
             ID = iD;
+            OD_ID = oD_ID;
             OD_Name = oD_Name;
             OD_Type = oD_Type;
             OD_TotalMoney = oD_TotalMoney;
@@ -18,6 +21,7 @@ namespace DTO.format
         }
 
         public int ID { get; set; }
+        public int OD_ID { get; set; }
         public string OD_Name { get; set; }
         public string OD_Type { get; set; }
         public double OD_TotalMoney { get; set; }

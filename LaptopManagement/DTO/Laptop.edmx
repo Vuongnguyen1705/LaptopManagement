@@ -21,8 +21,8 @@ warning 6002: The table/view 'LaptopShop.dbo.Brand' does not have a primary key 
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Product_Id" Type="int" />
           <Property Name="Quantity" Type="int" />
-          <Property Name="Combo_ID" Type="int" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Combo_Id" Type="int" />
+          <Property Name="User_Id" Type="int" />
         </EntityType>
         <EntityType Name="Catalog">
           <Key>
@@ -36,11 +36,12 @@ warning 6002: The table/view 'LaptopShop.dbo.Brand' does not have a primary key 
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Combo_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Product_List" Type="text" Nullable="false" />
           <Property Name="startDate" Type="date" Nullable="false" />
           <Property Name="endDate" Type="date" Nullable="false" />
-          <Property Name="totalMoney" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="totalMoney" Type="float" Nullable="false" />
           <Property Name="discount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Invoice">
@@ -75,7 +76,7 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" />
           <Property Name="Total_Price" Type="float" />
-          <Property Name="Customer_Id" Type="int" />
+          <Property Name="User_Id" Type="int" />
           <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="OrderDetail">
@@ -99,7 +100,7 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Image" Type="text" />
-          <Property Name="Discount" Type="int" />
+          <Property Name="Discount" Type="float" />
           <Property Name="Detail" Type="nvarchar" MaxLength="600" />
           <Property Name="Brand_ID" Type="int" />
         </EntityType>
@@ -172,8 +173,8 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Product_Id" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
-          <Property Name="Combo_ID" Type="Int32" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Combo_Id" Type="Int32" />
+          <Property Name="User_Id" Type="Int32" />
         </EntityType>
         <EntityType Name="Catalog">
           <Key>
@@ -187,11 +188,12 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Combo_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Product_List" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="totalMoney" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="totalMoney" Type="Double" Nullable="false" />
           <Property Name="discount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Invoice">
@@ -212,7 +214,7 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Total_Price" Type="Double" />
-          <Property Name="Customer_Id" Type="Int32" />
+          <Property Name="User_Id" Type="Int32" />
           <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="OrderDetail">
@@ -234,9 +236,9 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
           <Property Name="Product_Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Catalog_ID" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Discount" Type="Int32" />
+          <Property Name="Discount" Type="Double" />
           <Property Name="Detail" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
           <Property Name="Brand_ID" Type="Int32" />
         </EntityType>
@@ -315,8 +317,8 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Combo_ID" ColumnName="Combo_ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Combo_Id" ColumnName="Combo_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -332,6 +334,7 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
             <EntityTypeMapping TypeName="LaptopShopModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Combo_Name" ColumnName="Combo_Name" />
                 <ScalarProperty Name="Product_List" ColumnName="Product_List" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
@@ -359,7 +362,7 @@ warning 6002: The table/view 'LaptopShop.dbo.InvoiceDetail' does not have a prim
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Total_Price" ColumnName="Total_Price" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>

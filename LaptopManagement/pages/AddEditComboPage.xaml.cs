@@ -31,7 +31,7 @@ namespace LaptopManagement.pages
         private BLL_Product bLL_Product;
         private BLL_Combo bLL_Combo;
         private Dictionary<string, decimal> dic = new Dictionary<string, decimal>();
-        private decimal priceProduct = 0;
+        private double priceProduct = 0;
         private List<int> productListID = new List<int>();
         private ToastViewModel _vm;
         private int _idCombo;
@@ -105,7 +105,7 @@ namespace LaptopManagement.pages
                 ObservableCollection<ProductFormat> list = new ObservableCollection<ProductFormat>();
                 foreach (var item in new ObservableCollection<Product>(bLL_Product.getAllProduct()))
                 {
-                    list.Add(new ProductFormat(false, item.ID, item.Product_Name, "", item.Amount, item.Price, item.Image, (int)item.Discount, item.Detail, ""));
+                    list.Add(new ProductFormat(false, item.ID, item.Product_Name, "", item.Amount, Convert.ToDouble(item.Price), item.Image, (int)item.Discount, item.Detail, ""));
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -122,7 +122,7 @@ namespace LaptopManagement.pages
         {
             CheckBox check = sender as CheckBox;
             ProductFormat format = check.DataContext as ProductFormat;
-            dic.Add(format.Product_Name, format.Price);
+            dic.Add(format.Product_Name, (decimal)format.Price);
             productListID.Add(format.ID);
             format.isCheck = true;
         }
@@ -154,7 +154,7 @@ namespace LaptopManagement.pages
                     }
                     else
                     {
-                        bLL_Combo.AddCombo(new Combo(0, "", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), decimal.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
+                        bLL_Combo.AddCombo(new Combo(0,"", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
                         _vm.ShowSuccess("Thêm Combo thành công");
                     }
                 }
@@ -181,7 +181,7 @@ namespace LaptopManagement.pages
                     }
                     else
                     {
-                        bLL_Combo.Update(new Combo(_idCombo, "", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), decimal.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
+                        bLL_Combo.Update(new Combo(_idCombo,"", TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
                         _vm.ShowSuccess("Cập nhật thành công");
                     }
                 }
@@ -208,7 +208,7 @@ namespace LaptopManagement.pages
             {
                 chip = new Chip ();
                 chip.Content = item.Key;
-                priceProduct += item.Value;
+                priceProduct = (double)((int)priceProduct + item.Value);
                 chip.Margin = new Thickness(5);                
                 WrapPanelProductSelected.Children.Add(chip);
             }

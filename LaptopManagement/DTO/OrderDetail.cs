@@ -16,8 +16,8 @@ namespace DTO
     {
         public OrderDetail()
         {
-
         }
+
         public OrderDetail(int iD, int? order_Id, int? product_Id, int? combo_Id, int? quantity, double? price)
         {
             ID = iD;

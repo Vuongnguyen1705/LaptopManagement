@@ -8,7 +8,7 @@ namespace DTO.format
 {
     public class ProductFormat
     {
-        public ProductFormat(bool isCheck,int iD, string Product_Name, string catalog, int amount, decimal price, string Image, decimal discount, string Detail, string brand)
+        public ProductFormat(bool isCheck,int iD, string Product_Name, string catalog, int amount, double price, string Image, double discount, string Detail, string brand)
         {
             this.isCheck = isCheck;
             ID = iD;
@@ -27,9 +27,9 @@ namespace DTO.format
         public string Product_Name { get; set; }
         public string catalog { get; set; }
         public int Amount { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public string Image { get; set; }
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
         public string Detail { get; set; }
         public string brand { get; set; }
     }

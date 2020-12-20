@@ -71,7 +71,7 @@ namespace LaptopManagement.pages
                 ObservableCollection<ProductFormat> list = new ObservableCollection<ProductFormat>();
                 foreach (var item in new ObservableCollection<Product>(bLL_Product.getAllProduct()))
                 {
-                    list.Add(new ProductFormat(false, item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount, item.Price, item.Image, (int)item.Discount, item.Detail, bLL_Brand.getBrandNameByID((int)item.Brand_ID)));
+                    list.Add(new ProductFormat(false, item.ID, item.Product_Name, bLL_Catalog.getCatalogNameByID(item.Catalog_ID), item.Amount, Convert.ToDouble(item.Price), item.Image, (int)item.Discount, item.Detail, bLL_Brand.getBrandNameByID((int)item.Brand_ID)));
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
                 {

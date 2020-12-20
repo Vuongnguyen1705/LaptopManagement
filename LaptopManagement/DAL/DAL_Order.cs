@@ -26,7 +26,7 @@ namespace DAL
             Order temp = new Order();          
             temp.Date = order.Date;
             temp.Total_Price = order.Total_Price;
-            temp.Customer_Id = order.Customer_Id;
+            temp.User_Id = order.User_Id;
             temp.Status = order.Status;
             db.Orders.Add(temp);
             db.SaveChanges();
@@ -39,7 +39,7 @@ namespace DAL
                               select p).SingleOrDefault();
             result.Date = order.Date;
             result.Total_Price = order.Total_Price;
-            result.Customer_Id = order.Customer_Id;
+            result.User_Id = order.User_Id;
             result.Status = order.Status;
             db.SaveChanges();
         }

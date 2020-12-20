@@ -15,26 +15,7 @@ namespace DAL
         {
             db = new LaptopShopEntities();
         }
-        /*public Product getProductByProductName(string productname)
-        {
-            return db.Products.Where(x => x.Product_Name == productname).SingleOrDefault();
-        }
 
-        public ObservableCollection<Product> getAllProduct()
-        {
-            return new ObservableCollection<Product>(db.Products.ToList());
-        }
-
-        public void deleteProductByID(int id)
-        {
-            var product = db.Products.Where(x=>x.ID==id).SingleOrDefault();
-            db.Products.Remove(product);
-            db.SaveChanges();
-        }*/
-        /*public ObservableCollection<Order> getAllOrder()
-        {
-            return new ObservableCollection<Order>(db.Orders.ToList());
-        }*/
 
         public void AddOrderDetail(OrderDetail orderdetail)
         {
@@ -56,6 +37,14 @@ namespace DAL
         {
             return new ObservableCollection<OrderDetail>(db.OrderDetails.Where(x=>x.Order_Id == id).ToList());
         }
-
+        public void deleteOrderDetailByID(int id)
+        {
+            var orderDetail = db.OrderDetails.Where(x => x.ID == id).SingleOrDefault();
+            if (orderDetail != null) 
+            { 
+                db.OrderDetails.Remove(orderDetail);
+                db.SaveChanges();
+            }
+        }
     }
 }

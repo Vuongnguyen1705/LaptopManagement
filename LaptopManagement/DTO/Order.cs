@@ -18,19 +18,19 @@ namespace DTO
         {
         }
 
-        public Order(int iD, DateTime Date, double Total_Price, int Customer_Id, int Status)
+        public Order(int iD, DateTime? date, double? total_Price, int? user_Id, int? status)
         {
             ID = iD;
-            this.Date = Date;
-            this.Total_Price = Total_Price;
-            this.Customer_Id = Customer_Id;
-            this.Status = Status;
+            Date = date;
+            Total_Price = total_Price;
+            User_Id = user_Id;
+            Status = status;
         }
 
         public int ID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<double> Total_Price { get; set; }
-        public Nullable<int> Customer_Id { get; set; }
+        public Nullable<int> User_Id { get; set; }
         public Nullable<int> Status { get; set; }
     }
 }

@@ -53,7 +53,6 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
-                    <Button x:Name="ButtonDeleteOrderDetail" IsEnabled="False"  Margin="0 0 5 0" Background="Red" Content="Đặt lại chi tiết" HorizontalAlignment="Right" Click="ButtonDeleteOrderDetail_Click"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
@@ -132,7 +131,7 @@
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2" SelectionChanged="DataGridOrderDetail_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Binding="{Binding OD_Name}"
@@ -155,7 +154,15 @@
                                     Header="Số lượng"
                                     IsReadOnly="True"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Click="ButtonDeleteSelectedOrderDetail_Click">➖</Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
+                            
                         </DataGrid>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -168,7 +175,9 @@
                                 Width="140" DockPanel.Dock="Left"
                                 TextChanged="TextBoxSearchProduct_TextChanged"
                                 materialDesign:HintAssist.Hint="Tìm kiếm"/>
-                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" FlowDirection="LeftToRight">
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                <Button x:Name="ButtonDeleteOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0" Background="Red" Content="🗑️" HorizontalAlignment="Right" Click="ButtonDeleteOrderDetail_Click"/>
+                                <Button x:Name="ButtonAddOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0"  Content="➕" HorizontalAlignment="Right" Click="ButtonAdd_Click"/>
                                 <TextBox Name="TextBoxQuantity"                
                                     Width="50" 
                                     IsEnabled="False"
@@ -180,9 +189,7 @@
                                     HorizontalAlignment="Center"
                                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                                     materialDesign:HintAssist.Hint="SL"/>
-                                <Button x:Name="ButtonAddOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0"  Content="➕" HorizontalAlignment="Right" Click="ButtonAdd_Click"/>
-                                <Button x:Name="ButtonDeleteSelectedOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0" Background="Red" Content="🗑️" HorizontalAlignment="Right" Click="ButtonDeleteSelectedOrderDetail_Click"/>
-                                <Button x:Name="ButtonSaveOrderDetail" IsEnabled="False" Width="50" Margin="0 0 5 0" Background="Green" Content="💾" HorizontalAlignment="Right" Click="ButtonSaveOrderDetail_Click"/>
+                                
                             </StackPanel>
                         </DockPanel>
                     </Grid>

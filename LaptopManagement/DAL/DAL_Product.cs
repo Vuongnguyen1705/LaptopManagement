@@ -72,7 +72,7 @@ namespace DAL
         }
         public decimal getProductPriceByName(string Product_Name)
         {
-            return db.Products.Where(x => x.Product_Name == Product_Name).Select(x => x.Price).SingleOrDefault();
+            return (decimal)db.Products.Where(x => x.Product_Name == Product_Name).Select(x => x.Price).SingleOrDefault();
         }
     }
 }

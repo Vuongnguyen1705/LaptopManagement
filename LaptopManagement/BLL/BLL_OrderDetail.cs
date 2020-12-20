@@ -18,6 +18,10 @@ namespace BLL
         {
             dAL_OrderDetail.AddOrderDetail(orderdetail);
         }
+        public void deleteOrderDetailByID(int id)
+        {
+            dAL_OrderDetail.deleteOrderDetailByID(id);
+        }
         public OrderDetail GetOrderDetailByID(int id)
         {
             return dAL_OrderDetail.GetOrderDetailByID(id);

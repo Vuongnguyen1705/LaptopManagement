@@ -80,7 +80,7 @@ namespace DAL
         }
         public decimal getComboPriceByName(string Combo_Name)
         {
-            return db.Comboes.Where(x => x.Combo_Name == Combo_Name).Select(x => (x.totalMoney - (x.totalMoney*x.discount/100))).SingleOrDefault();
+            return (decimal)db.Comboes.Where(x => x.Combo_Name == Combo_Name).Select(x => x.totalMoney - (x.totalMoney * x.discount / 100)).SingleOrDefault();
         }
     }
 }
