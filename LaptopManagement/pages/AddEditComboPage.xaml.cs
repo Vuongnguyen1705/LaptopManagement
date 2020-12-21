@@ -158,6 +158,7 @@ namespace LaptopManagement.pages
                     }
                     else
                     {
+                        //MessageBox.Show("images/Combo/" + System.IO.Path.GetFileName(filePath));
                         System.IO.File.Copy(filePath, destinationDir + System.IO.Path.GetFileName(filePath), true);
                         bLL_Combo.AddCombo(new Combo(0, "images/Combo/" + System.IO.Path.GetFileName(filePath), TextBoxComboName.Text, productid.Remove(productid.Length - 1), DateTime.Parse(DatePickerStartDate.Text), DateTime.Parse(DatePickerEndDate.Text), Double.Parse(TextBoxTotalMoney.Text), Int32.Parse(TextBoxDiscount.Text)));
                         _vm.ShowSuccess("Thêm Combo thành công");
@@ -355,9 +356,9 @@ namespace LaptopManagement.pages
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 ImageCombo.Source = new BitmapImage(fileUri);
                 filePath = fileUri.ToString().Remove(0, 8);
-                MessageBox.Show(filePath);
+                //MessageBox.Show(filePath);
                 destinationDir = "../../../../LaptopShop/LaptopShop/Assets/Layout2/images/Combo/";                
-                MessageBox.Show(destinationDir + System.IO.Path.GetFileName(filePath));
+                //MessageBox.Show(destinationDir + System.IO.Path.GetFileName(filePath));
             }
         }
     }

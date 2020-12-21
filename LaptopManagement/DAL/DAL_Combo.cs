@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,13 +39,14 @@ namespace DAL
         {
             Combo temp = new Combo();
             temp.Combo_Name = combo.Combo_Name;
+            temp.Image = combo.Image;
             temp.Product_List = combo.Product_List;
             temp.startDate = combo.startDate;
             temp.endDate = combo.endDate;
             temp.totalMoney = combo.totalMoney;
-            temp.discount = combo.discount;            
+            temp.discount = combo.discount;
             db.Comboes.Add(temp);
-            db.SaveChanges();
+            db.SaveChanges();           
         }
 
         public void Update(Combo combo)

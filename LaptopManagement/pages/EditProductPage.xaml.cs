@@ -70,7 +70,8 @@ namespace LaptopManagement.pages
 
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 ImageBox.Source = new BitmapImage(fileUri);
-                string filePath = fileUri.ToString().Remove(0, 8);
+                filePath = fileUri.ToString().Remove(0, 8);
+                
                 destinationDir = "../../../../LaptopShop/LaptopShop/Assets/Layout2/images/";
             }
         }
@@ -88,27 +89,27 @@ namespace LaptopManagement.pages
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("name: " + flagProductName + " price: " + flagPrice + " discount: " + flagDiscount + " detail:" + flagDetail);
+            //MessageBox.Show("name: " + flagProductName + " price: " + flagPrice + " discount: " + flagDiscount + " detail:" + flagDetail);
 
             if (flagAmount == true && flagDetail == true && flagDiscount == true && flagPrice == true && flagProductName == true)
             {
                 string folder = "";
-                switch (ComboBoxCatalog.SelectedIndex)
+                switch (ComboBoxCatalog.SelectedIndex +1)
                 {
                     case 1:
                         folder = "PC/";
                         break;
                     case 2:
-                        folder = "Bàn Phím/";
+                        folder = "Keyboard/";
                         break;
                     case 3:
-                        folder = "Chuột/";
+                        folder = "Mouse/";
                         break;
                     case 4:
-                        folder = "Tai nghe/";
+                        folder = "Headphone/";
                         break;
                     case 5:
-                        folder = "Loa/";
+                        folder = "Speaker/";
                         break;
                     case 6:
                         folder = "Laptop/";
@@ -121,6 +122,7 @@ namespace LaptopManagement.pages
                 }
                 else
                 {
+                    
                     linkImage = "/images/" + folder + System.IO.Path.GetFileName(filePath);
                     System.IO.File.Copy(filePath, destinationDir + folder + System.IO.Path.GetFileName(filePath), true);
                 }

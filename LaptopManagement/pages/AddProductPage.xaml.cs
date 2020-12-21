@@ -80,22 +80,22 @@ namespace LaptopManagement.pages
             if (flagAmount==true && flagDetail==true && flagDiscount==true && flagPrice==true && flagProductName==true)
             {
                 string folder = "";               
-                switch (ComboBoxCatalog.SelectedIndex)
+                switch (ComboBoxCatalog.SelectedIndex +1)
                 {
                     case 1:
                         folder = "PC/";
                         break;
                     case 2:
-                        folder = "Bàn Phím/";
+                        folder = "Keyboard/";
                         break;
                     case 3:
-                        folder = "Chuột/";
+                        folder = "Mouse/";
                         break;
                     case 4:
-                        folder = "Tai nghe/";
+                        folder = "Headphone/";
                         break;
                     case 5:
-                        folder = "Loa/";
+                        folder = "Speaker/";
                         break;
                     case 6:
                         folder = "Laptop/";
